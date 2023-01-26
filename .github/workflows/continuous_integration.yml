@@ -1,0 +1,53 @@
+name: Continuous Integration - Train and Test Rasa
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  training-testing:
+    name: Training and Testing
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout GitHub repository
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4.5.0
+
+      # Install Python Dependencies
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v4
+            
+      # Run rasa train and rasa test
+      - name: Rasa Train-Test Model GitHub Action
+        uses: RasaHQ/rasa-train-test-gha@main
+        with:
+          # The Rasa version used to run test and train
+          rasa_version: latest-full
+          # Run rasa train
+          rasa_train: true
+          # Run rasa test
+          rasa_test: true
+          # Fine-tune model
+          fine_tune: false
+          # Validates domain and data files to check for possible mistakes
+          data_validate: true
+          # Additional arguments passed to the rasa data validate command
+          # data_validate_args:
+          # The types of training (available types: core/nlu/all)
+          train_type: all
+          # Additional arguments passed to the rasa train command
+          # train_args:
+          # Additional arguments passed to the rasa test nlu command
+          # test_nlu_args: 
+          # Additional arguments passed to the rasa test core command
+          # test_core_args:
+          # The types of tests to run (available types: core/nlu/all)
+          test_type: all
+          # Publish tests summary as a PR comment
+          publish_summary: true
