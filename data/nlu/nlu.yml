@@ -6,16 +6,30 @@ nlu:
     - hey
     - hello
     - hi
+    - hey!
+    - hi!
+    - hello!
     - hello there
     - good morning
     - good evening
-    - moin
     - hey there
     - let's go
     - hey dude
-    - goodmorning
-    - goodevening
+    - good morning
+    - good evening
     - good afternoon
+    - what is up
+    - what's up
+    - heyo
+    - greetings
+    - Good morning
+    - hiya
+    - hola
+    - hey there
+    - wassup
+    - whats good
+    - yo
+    - whaddup
 
 - intent: goodbye
   examples: |
@@ -29,6 +43,15 @@ nlu:
     - see you around
     - bye bye
     - see you later
+    - Bye
+    - exit
+    - thank you, bye
+    - take care
+    - adios
+    - ciao
+    - peace out
+    - gotta go
+    - gtg
 
 - intent: affirm
   examples: |
