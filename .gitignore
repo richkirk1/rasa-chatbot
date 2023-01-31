@@ -4,6 +4,10 @@ results/
 terms/
 .rasa/
 
+
+# Chatette
+output/
+
 # Environments
 .env
 .venv
