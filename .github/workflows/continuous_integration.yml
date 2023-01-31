@@ -1,10 +1,8 @@
 name: Continuous Integration - Train and Test Rasa
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   training-testing:
@@ -18,11 +16,13 @@ jobs:
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
+        with:
+          python-version: '3.8'
 
       # Install Python Dependencies
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v4
-            
+
       # Run rasa train and rasa test
       - name: Rasa Train-Test Model GitHub Action
         uses: RasaHQ/rasa-train-test-gha@main
@@ -44,7 +44,7 @@ jobs:
           # Additional arguments passed to the rasa train command
           # train_args:
           # Additional arguments passed to the rasa test nlu command
-          # test_nlu_args: 
+          # test_nlu_args:
           # Additional arguments passed to the rasa test core command
           # test_core_args:
           # The types of tests to run (available types: core/nlu/all)
