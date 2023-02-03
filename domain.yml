@@ -5,29 +5,50 @@ intents:
   - goodbye
   - affirm
   - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - is_bot_or_human
+  - thankyou
+  - search_jobs
+  - inform
+  - stop
+  - request_job_form
+
+entities:
+  - title
+
+slots:
+  title:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: title
+
+forms:
+  job_search_form:
+    required_slots:
+      - title
+
+actions:
+  - action_search_jobs
+  - validate_job_search_form
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
+    - text: "Hey! How are you?"
   utter_goodbye:
-  - text: "Bye"
+    - text: "Bye"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+    - text: "I am a bot, powered by Rasa."
+
+  utter_youarewelcome:
+    - text: "You're very welcome."
+
+  utter_ask_title:
+    - text: "Sure thing! What type of job are you looking for?"
+
+  utter_ask_stop:
+    - text: "Are you sure you want to stop the form?"
 
 session_config:
   session_expiration_time: 60

@@ -1,0 +1,39 @@
+version: "3.1"
+
+rules:
+  # Chitchat Rules
+  - rule: Say hi anytime the user says hi
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Say 'I am a bot' anytime the user asks if is bot
+    steps:
+      - intent: is_bot_or_human
+      - action: utter_iamabot
+
+  - rule: Say you're welcome anytime the user says thank you
+    steps:
+      - intent: thankyou
+      - action: utter_youarewelcome
+
+  # Form Rules
+  - rule: Activate Job Search Form
+    steps:
+      - intent: search_jobs
+      - action: job_search_form
+      - active_loop: job_search_form
+
+  - rule: Interruption in Job Search Form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: is_bot_or_human
+      - action: utter_iamabot
+      - action: job_search_form
+      - active_loop: job_search_form

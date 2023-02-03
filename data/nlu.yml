@@ -1,0 +1,126 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - hey!
+      - hi!
+      - hello!
+      - hello there
+      - good morning
+      - good evening
+      - hey there
+      - let's go
+      - hey dude
+      - good morning
+      - good evening
+      - good afternoon
+      - what is up
+      - what's up
+      - heyo
+      - greetings
+      - Good morning
+      - hiya
+      - hola
+      - hey there
+      - wassup
+      - whats good
+      - yo
+      - whaddup
+
+  - intent: goodbye
+    examples: |
+      - cu
+      - good by
+      - cee you later
+      - good night
+      - bye
+      - goodbye
+      - have a nice day
+      - see you around
+      - bye bye
+      - see you later
+      - Bye
+      - exit
+      - thank you, bye
+      - take care
+      - adios
+      - ciao
+      - peace out
+      - gotta go
+      - gtg
+
+  - intent: affirm
+    examples: |
+      - yes
+      - y
+      - indeed
+      - of course
+      - that sounds good
+      - correct
+      - Yes, please!
+      - aye aye
+      - yizzer
+
+  - intent: deny
+    examples: |
+      - no
+      - n
+      - never
+      - I don't think so
+      - don't like that
+      - no way
+      - not really
+      - please, no
+
+  - intent: is_bot_or_human
+    examples: |
+      - are you a bot?
+      - am I talking to a bot?
+      - are you a human?
+      - am I talking to a human?
+
+
+  - intent: thankyou
+    examples: |
+      - Thanks!
+      - thank you bot
+      - thank you
+      - awesome, thanks a lot
+      - many thanks to you
+
+  - intent: stop
+    examples: |
+      - stop
+      - nevermind
+      - please stop
+      - i want to stop
+      - stop the form
+      - i do not wish to continue
+      - can we stop doing this
+      - stop asking me questions
+      - i cant do this anymore
+
+  - intent: search_jobs
+    examples: |
+      - I am looking for a job.
+      - Could you help me find a job?
+      - Please get me a job
+      - I want to find a job
+      - I need a job please
+      - I am interested in finding a job
+      - Could you get me a job?
+
+  - intent: inform
+    examples: |
+      - I would like a job in [software development](title)
+      - I am looking for an [IT](title) role
+      - [IT](title)
+      - I need a job in [software development](title)
+      - I want a job for [IT](title)
+      - an [IT](title) job please
+      - i want [software development](title)
+      - how about [IT](title)

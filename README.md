@@ -23,7 +23,11 @@
 - Install required dependencies (including [rasa](https://rasa.com/docs/rasa/installation/installing-rasa-open-source/))
 
     ```{bash}
-    pip3 install -r requirements.txt
+    pip install --upgrade pip
+    pip install -r requirements.txt
+    python3 -m spacy download en_core_web_md
+    python3 -m spacy link en_core_web_md en
+    pip install -e .
     ```
 
 ## Usage
