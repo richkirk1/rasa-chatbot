@@ -39,10 +39,17 @@ rasa train
 ```
 
 ### Interacting
+First, run:
+```{bash}
+rasa run actions
+```
 
+In a separate terminal:
 ```{bash}
 rasa shell
 ```
+
+
 
 ### Testing
 
