@@ -6,13 +6,14 @@
 from typing import Any, Dict, List, Text
 
 from rasa_sdk import Action, FormValidationAction, Tracker
+from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 
-ALLOWED_JOB_TITLES = ["IT", "software development"]
-
 
 class ValidateJobSearchForm(FormValidationAction):
+    filled_slots = set()
+
     def name(self) -> Text:
         return "validate_job_search_form"
 
@@ -25,15 +26,13 @@ class ValidateJobSearchForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         """Validate `title` value."""
 
-        if slot_value not in ALLOWED_JOB_TITLES:
+        if "title" in self.filled_slots:
+            return {}
+        else:
+            self.filled_slots.add("title")
             dispatcher.utter_message(
-                text=f"We only accept jobs of type: {ALLOWED_JOB_TITLES}."
-            )
-            return {"title": None}
-        dispatcher.utter_message(
-            text=f"OK! I will look for jobs in {slot_value}."
-        )
-        return {"title": slot_value}
+                text=f"Okay, we will look for a job as {slot_value}")
+            return {"title": slot_value}
 
 
 class ActionSearchJobs(Action):
@@ -48,3 +47,13 @@ class ActionSearchJobs(Action):
     ) -> List[Dict[str, Any]]:
         dispatcher.utter_message(text="Here is job")
         return []
+
+
+class ResetAllSlots(Action):
+
+    def name(self):
+        return "action_reset_all_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        ValidateJobSearchForm.filled_slots = set()
+        return [AllSlotsReset()]
