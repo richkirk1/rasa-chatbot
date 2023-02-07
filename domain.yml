@@ -1,16 +1,16 @@
 version: "3.1"
 
 intents:
-  - greet
-  - goodbye
   - affirm
   - deny
-  - is_bot_or_human
-  - thankyou
-  - search_jobs
+  - goodbye
+  - greet
   - inform
-  - stop
+  - is_bot_or_human
   - request_job_form
+  - search_jobs
+  - stop
+  - thankyou
 
 entities:
   - title
@@ -29,26 +29,27 @@ forms:
       - title
 
 actions:
+  - action_reset_all_slots
   - action_search_jobs
   - validate_job_search_form
 
 responses:
   utter_greet:
-    - text: "Hey! How are you?"
+    - text: Hey! How are you?
   utter_goodbye:
-    - text: "Bye"
-
+    - text: Bye
   utter_iamabot:
-    - text: "I am a bot, powered by Rasa."
-
+    - text: I am a bot, powered by Rasa.
   utter_youarewelcome:
-    - text: "You're very welcome."
-
+    - text: You're very welcome.
   utter_ask_title:
-    - text: "Sure thing! What type of job are you looking for?"
-
+    - text: Sure thing! What type of job are you looking for?
   utter_ask_stop:
-    - text: "Are you sure you want to stop the form?"
+    - text: Are you sure you want to stop the form?
+  utter_ask_rephrase:
+    - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+  utter_default:
+    - text: I'm sorry, I can't help you.
 
 session_config:
   session_expiration_time: 60
