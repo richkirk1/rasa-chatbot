@@ -1,7 +1,6 @@
 version: "3.1"
 
 rules:
-  # Chitchat Rules
   - rule: Say hi anytime the user says hi
     steps:
       - intent: greet
@@ -22,18 +21,27 @@ rules:
       - intent: thankyou
       - action: utter_youarewelcome
 
+  # Fallback Rule according to: https://rasa.com/docs/rasa/next/fallback-handoff/#two-stage-fallback
+  - rule: Implementation of the Two-Stage-Fallback
+    steps:
+      - intent: nlu_fallback
+      - action: action_two_stage_fallback
+      - active_loop: action_two_stage_fallback
+
   # Form Rules
   - rule: Activate Job Search Form
     steps:
       - intent: search_jobs
+      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
 
-  - rule: Interruption in Job Search Form
+  - rule: Submit Job Search Form
     condition:
       - active_loop: job_search_form
     steps:
-      - intent: is_bot_or_human
-      - action: utter_iamabot
       - action: job_search_form
-      - active_loop: job_search_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_search_jobs
