@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  training-testing:
+  rasa-training-testing:
     name: Training and Testing
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
         with:
-          python-version: '3.8'
+          python-version: "3.8"
 
       # Install Python Dependencies
       - name: Install Python dependencies
@@ -54,7 +54,7 @@ jobs:
           test_type: all
           # Publish tests summary as a PR comment
           publish_summary: true
-  
+
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
@@ -63,13 +63,12 @@ jobs:
       # Checkout GitHub repository
       - name: Checkout GitHub repository
         uses: actions/checkout@v3
-        
 
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
         with:
-          python-version: '3.8'
+          python-version: "3.8"
 
       # Install Python Dependencies
       - name: Install Python dependencies
