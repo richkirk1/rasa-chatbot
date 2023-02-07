@@ -56,3 +56,6 @@ rasa shell
 rasa test core
 rasa test nlu
 ```
+Postman team invite link (Used for testing forms in Rasa.):
+
+https://app.getpostman.com/join-team?invite_code=ae63c809e8616e50c5c94b91255b829f&target_code=41bbf45353989a78c905f0cf2ea92392
