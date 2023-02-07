@@ -1,19 +1,37 @@
 version: "3.1"
 
 stories:
-  - story: Happy path
+  - story: Set title in form
     steps:
       - intent: greet
       - action: utter_greet
       - intent: search_jobs
+      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
           - requested_slot: title
       - slot_was_set:
-          - title: IT
+          - title: software development
       - slot_was_set:
-          - title: IT
+          - title: software development
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: action_search_jobs
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: Set title in request
+    steps:
+      - intent: search_jobs
+        entities:
+          - title: developer
+      - action: action_reset_all_slots
+      - action: job_search_form
+      - active_loop: job_search_form
+      - slot_was_set:
+          - title: developer
       - slot_was_set:
           - requested_slot: null
       - active_loop: null
@@ -21,48 +39,38 @@ stories:
       - intent: thankyou
       - action: utter_youarewelcome
 
-  - story: Stop and resume
+  - story: Stop early 1
     steps:
-      - intent: greet
-      - action: utter_greet
       - intent: search_jobs
+      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
           - requested_slot: title
       - intent: stop
       - action: utter_ask_stop
-      - intent: deny
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - slot_was_set:
-          - title: software development
-      - slot_was_set:
-          - title: software development
+      - intent: affirm
+      - action: action_deactivate_loop
+      - active_loop: null
       - slot_was_set:
           - requested_slot: null
-      - active_loop: null
-      - action: action_search_jobs
       - intent: goodbye
       - action: utter_goodbye
 
-  - story: Stop early 1
+  - story: Stop early 2
     steps:
       - intent: greet
       - action: utter_greet
       - intent: search_jobs
+      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
           - requested_slot: title
       - intent: stop
       - action: utter_ask_stop
-      - or:
-          - intent: stop
-          - intent: affirm
+      - intent: stop
       - action: action_deactivate_loop
       - active_loop: null
-      - intent: goodbye
-      - action: utter_goodbye
+      - slot_was_set:
+          - requested_slot: null
