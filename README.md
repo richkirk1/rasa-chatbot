@@ -2,25 +2,25 @@
 
 ## Installation
 
-- Git clone from repo
+- Git clone from repo (ONLY NEED TO DO THIS ONCE)
 
     ```{bash}
     git clone https://github.com/richkirk1/rasa-chatbot.git [<directory>]
     ```
 
-- Create virtual environment
+- Create virtual environment (ONLY NEED TO DO THIS ONCE)
 
     ```{bash}
     python3 -m venv .venv
     ```
 
-- Activate virtual environment
+- Activate virtual environment (DO THIS EVERYTIME)
 
     ```{bash}
     source .venv/bin/activate
     ```
 
-- Install required dependencies (including [rasa](https://rasa.com/docs/rasa/installation/installing-rasa-open-source/))
+- Install required dependencies (including [rasa](https://rasa.com/docs/rasa/installation/installing-rasa-open-source/)) (ONLY NEED TO DO THIS ONCE)
 
     ```{bash}
     pip install --upgrade pip
