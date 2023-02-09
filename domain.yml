@@ -7,7 +7,6 @@ intents:
   - greet
   - inform
   - is_bot_or_human
-  - request_job_form
   - search_jobs
   - stop
   - thankyou
@@ -46,6 +45,8 @@ responses:
     - text: Sure thing! What type of job are you looking for?
   utter_ask_stop:
     - text: Are you sure you want to stop the form?
+  utter_ask_continue:
+    - text: Would you like to continue the form?
   utter_ask_rephrase:
     - text: I'm sorry, I didn't quite understand that. Could you rephrase?
   utter_default:

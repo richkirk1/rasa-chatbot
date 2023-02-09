@@ -28,6 +28,23 @@ rules:
       - action: action_two_stage_fallback
       - active_loop: action_two_stage_fallback
 
+  # Form Interrupt Rules
+  - rule: is_bot_or_human in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: is_bot_or_human
+      - action: utter_iamabot
+      - action: utter_ask_continue
+
+  - rule: greet in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - action: utter_ask_continue
+
   # Form Rules
   - rule: Activate Job Search Form
     steps:
