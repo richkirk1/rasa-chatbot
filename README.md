@@ -38,15 +38,16 @@ First set up the action server in a separate terminal window:
 ```{bash}
 rasa run actions
 ```
+
 These are custom actions that require connections to external services and what not.
 
 In another terminal window, run the bot:
+
 ```{bash}
 rasa shell --debug
 ```
 
 The `--debug` flag produces a lot of output meant to help understand how the bot is working under the hood. To have a normal conversation, run without the `--debug` flag.
-
 
 ## Testing
 
@@ -57,25 +58,27 @@ rasa test core
 rasa test nlu
 ```
 
-
 ### Postman
+
 Postman is a service for testing APIs, is useful for testing Rasa custom actions and Rasa forms.
 
 Here is a Postman team invite link:
 
-https://app.getpostman.com/join-team?invite_code=ae63c809e8616e50c5c94b91255b829f&target_code=41bbf45353989a78c905f0cf2ea92392
+<https://app.getpostman.com/join-team?invite_code=ae63c809e8616e50c5c94b91255b829f&target_code=41bbf45353989a78c905f0cf2ea92392>
 
 To test with postman, first run the actions server:
+
 ```{bash}
 rasa run actions
 ```
 
 In another terminal window, run the bot server:
+
 ```{bash}
 rasa run --enable-api --debug
 ```
 
-Then, in the postman UI, you can run tests on the Collections (https://learning.postman.com/docs/running-collections/intro-to-collection-runs/).
+Then, in the postman UI, you can run tests on the Collections (<https://learning.postman.com/docs/running-collections/intro-to-collection-runs/>).
 
 ## File Overview
 
@@ -87,9 +90,8 @@ Then, in the postman UI, you can run tests on the Collections (https://learning.
 
 `config.yml` - training configurations for the NLU pipeline and policy ensemble
 
-
-
 ## Development
+
 To develop code for this bot:
 
 - First activate the virtual environment
@@ -100,7 +102,6 @@ To develop code for this bot:
 
 - If you haven't already, install the required packages
 
-
     ```{bash}
     pip install --upgrade pip
     pip install -r requirements.txt
@@ -110,7 +111,6 @@ To develop code for this bot:
 
 - Create a new branch, either through extensions or via the terminal (`git checkout -b <branch_name>`)
 
-
 - Make changes as necessary and make commits
 
 - Push the local branch with changes to the remote repo:
@@ -119,5 +119,4 @@ To develop code for this bot:
     git push -u origin <branch-name>
     ```
 
-- Submit a PR following this guide (https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request?tool=webui)
-
+- Submit a PR following this guide (<https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request?tool=webui>)
