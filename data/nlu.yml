@@ -187,7 +187,7 @@ nlu:
       - Can you help me get a job?
       - I would like to find a job
 
-  - intent: inform
+  - intent: inform_title
     examples: |
       - [software development](title)
       - [designer](title)

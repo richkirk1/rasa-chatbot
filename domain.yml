@@ -5,7 +5,7 @@ intents:
   - deny
   - goodbye
   - greet
-  - inform
+  - inform_title
   - is_bot_or_human
   - search_jobs
   - stop
