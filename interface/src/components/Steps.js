@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import socket from '../socketio';
-import Chatbot, {Loading} from 'react-simple-chatbot';
+import {Loading} from 'react-simple-chatbot';
 
 //Plans to seperate this class and it be called within steps
-class Socket extends Component {
+class ActionProvider extends Component {
     constructor(props) {
         super(props);
 
@@ -51,7 +51,7 @@ const steps =
 [   
     {
         id: 'Introduction',
-        message: 'Hi I am Rover.',
+        message: 'Hi I am Rover, can I help you with your job search today?',
         trigger: 'user_uttered',
     },
     {
@@ -61,7 +61,7 @@ const steps =
     },
     {
         id: 'bot_uttered',
-        component: <Socket/>,
+        component: <ActionProvider/>,
         asMessage: true,
         trigger: 'user_uttered',
     }

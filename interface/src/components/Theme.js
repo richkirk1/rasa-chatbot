@@ -2,10 +2,8 @@
 
 const theme = {
     background: '#F9F9F9',
-    //fontFamily: 'Helvetica Neue',
-    headerBgColor: '#EEF2F6',
-    //headerFontColor: '#fff',
-    //headerFontSize: '15px',
+    fontFamily: 'Arial, sans-serif',
+    headerBgColor: '#D4DBE2',
     botBubbleColor: '#D4DBE2',
     botFontColor: '#000000',
     userBubbleColor: '#7ED4FF',
