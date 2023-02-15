@@ -71,12 +71,12 @@ First set up the action server:
 rasa run actions
 ```
 
-In the second terminal we will need to set up the socket.io server:
+In the second terminal we will need run rasa on a live server.
 ```{bash}
 rasa run --cors "*"
 ```
 
-In the third terminal window we will set up a local server for the interface to run. It is important that you are within the interface folder when running this command.
+In the third terminal window we will set up a local server for the interface to run. It is important that you are within the interface directory when running this command.
 ```{bash}
 npm start
 ```
