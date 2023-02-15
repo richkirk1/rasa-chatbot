@@ -36,6 +36,10 @@ nlu:
       - Hi bot
       - How you doing bot
       - Hi
+      - heyoo
+      - hey...
+      - hihi
+
   - intent: goodbye
     examples: |
       - cu
@@ -62,6 +66,7 @@ nlu:
       - Close this talk
       - ok, bye
       - bye now, it was nice talking
+
   - intent: affirm
     examples: |
       - yes
@@ -82,6 +87,7 @@ nlu:
       - yes pls
       - please yes
       - yessssss
+
   - intent: deny
     examples: |
       - no
@@ -100,6 +106,7 @@ nlu:
       - negative
       - decline
       - I wish to decline
+
   - intent: is_bot_or_human
     examples: |
       - are you a bot?
@@ -111,6 +118,9 @@ nlu:
       - are you a human or bot?
       - are you really a bot?
       - Are you actually a human??
+      - r u a bot??
+      - am i speaking with a person?
+
   - intent: thankyou
     examples: |
       - Thanks!
@@ -129,6 +139,8 @@ nlu:
       - thx
       - Thank you so much
       - Thank you!
+      - Thank you very much bot
+
   - intent: stop
     examples: |
       - stop
@@ -141,6 +153,8 @@ nlu:
       - i cant do this anymore
       - I wish to stop please
       - STOP
+      - no, i would like to stop
+
   - intent: search_jobs
     examples: |
       - I am looking for a job.
@@ -170,8 +184,10 @@ nlu:
       - Can you assist me in finding a [project manager](title) job?
       - I would like to find a job in [IT](title)
       - I would like a job as a [developer](title)
+      - Can you help me get a job?
+      - I would like to find a job
 
-  - intent: inform
+  - intent: inform_title
     examples: |
       - [software development](title)
       - [designer](title)
