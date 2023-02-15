@@ -20,16 +20,29 @@
     source .venv/bin/activate
     ```
 
-- Install required dependencies (including [rasa](https://rasa.com/docs/rasa/installation/installing-rasa-open-source/))
+- Install required dependencies (including [rasa](https://rasa.com/docs/rasa/installation/installing-rasa-open-source/) & [node.js](https://nodejs.org/en/))
 
-    ```{bash}
-    pip install --upgrade pip
-    pip install -r requirements.txt
-    python3 -m spacy download en_core_web_md
-    pip install -e .
-    ```
+#### Rasa
+
+```{bash}
+pip install --upgrade pip
+pip install -r requirements.txt
+python3 -m spacy download en_core_web_md
+pip install -e .
+pip install ntlk
+```
+    
+#### Node.js
+
+```{bash}
+npm i --prefix ./interface react-simple-chatbot
+npm i --prefix ./interface socket.io-client
+npm i --prefix ./interface styled-components
+```
 
 ## Usage (How to Run this chatbot)
+
+### Rasa
 
 To train a model, use `rasa train` (this will take a significant amount of time; if you wish to train it faster, try the command with `--augmentation 0`).
 
@@ -48,6 +61,25 @@ rasa shell --debug
 ```
 
 The `--debug` flag produces a lot of output meant to help understand how the bot is working under the hood. To have a normal conversation, run without the `--debug` flag.
+
+### Interface
+
+To run the interface you will need three seperate terminals.
+
+First set up the action server:
+```{bash}
+rasa run actions
+```
+
+In the second terminal we will need to set up the socket.io server:
+```{bash}
+rasa run --cors "*"
+```
+
+In the third terminal window we will set up a local server for the interface to run. It is important that you are within the interface folder when running this command.
+```{bash}
+npm start
+```
 
 ## Testing
 
