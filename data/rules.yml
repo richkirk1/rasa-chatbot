@@ -48,7 +48,7 @@ rules:
   # Form Rules
   - rule: Activate Job Search Form
     steps:
-      - intent: search_jobs
+      - intent: cumulative_search
       - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
@@ -62,7 +62,7 @@ rules:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
-      - action: action_search_jobs
+      - action: action_cumulative_search
 
   # Rules within job_search_from
   - rule: Filter by degree

@@ -2,11 +2,11 @@ version: "3.1"
 nlu:
   - synonym: software
     examples: |
-    - software developer
-    - software engineer
-    - sde
-    - swe
-    - software develop engineer
+      - software developer
+      - software engineer
+      - sde
+      - swe
+      - software develop engineer
 
   - intent: greet
     examples: |
@@ -163,7 +163,7 @@ nlu:
       - STOP
       - no, i would like to stop
 
-  - intent: search_jobs
+  - intent: cumulative_search
     examples: |
       - I am looking for a job.
       - Could you help me find a job?

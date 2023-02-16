@@ -113,6 +113,7 @@ class ActionSearchJobs(Action):
         query_results_title = DbQueryingMethods.select_by_slot(conn=conn,
             slot_name=title_name,slot_value=title_value)
 
+        dispatcher.utter_message(text = "Where do you prefer to work?")
         # get matching for location
         resource_topic_value = tracker.get_slot("location")
         # make sure we don't pass None to our fuzzy matcher
