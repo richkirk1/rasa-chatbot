@@ -4,7 +4,6 @@ results/
 terms/
 .rasa/
 
-
 # Chatette
 output/
 
@@ -26,3 +25,17 @@ venv/
 
 # Python Builds
 *.pyc/
+
+# Nodejs
+node_modules
+
+# testing
+/coverage
+
+# production
+build
+
+# logs
+logs
+*.log
+
