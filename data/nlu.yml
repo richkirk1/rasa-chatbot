@@ -1,5 +1,13 @@
 version: "3.1"
 nlu:
+  - synonym: software
+    examples: |
+    - software developer
+    - software engineer
+    - sde
+    - swe
+    - software develop engineer
+
   - intent: greet
     examples: |
       - hey
@@ -201,3 +209,27 @@ nlu:
       - [data scientist](title) preferably
       - I'm seeking a job in [IT](title)
       - I would prefer a job as a [project manager](title), thanks
+
+  - intent: inform_location
+    examples: |
+      - I want to find a job in [New York](location)
+      - Can you help me find a job in [San Francisco](location)?
+      - [Austin](location)
+
+  - intent: inform_degree
+    examples: |
+      - I have a [bachelor](degree) degree
+      - I am a [master](degree)
+      - I graduated with a [master](degree)
+      - [phd](degree)
+
+  - intent: inform_experience
+    examples: |
+      - I worked for [years](experience)
+      - I have [years](experience)
+
+  - intent: inform_company
+    examples: |
+      - I want to work at [Google](company)
+      - I want a job at [Netflix](company)
+      - Please help me find jobs at [Microsoft](company)

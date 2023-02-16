@@ -53,6 +53,7 @@ rules:
       - action: job_search_form
       - active_loop: job_search_form
 
+  # Whenever there is no longer extra slots, the loop would stop
   - rule: Submit Job Search Form
     condition:
       - active_loop: job_search_form
@@ -62,3 +63,24 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: action_search_jobs
+
+  # Rules within job_search_from
+  - rule: Filter by degree
+    steps:
+    - intent: inform_degree
+    - action: fiter_by_degree
+  
+  - rule: Filter by location
+    steps:
+    - intent: inform_location
+    - action: fiter_by_location
+  
+  - rule: Filter by company
+    steps:
+    - intent: inform_company
+    - action: fiter_by_company
+
+  - rule: Filter by experience
+    steps:
+    - intent: inform_experience
+    - action: fiter_by_experience

@@ -5,14 +5,25 @@ intents:
   - deny
   - goodbye
   - greet
-  - inform_title
+  - inform
   - is_bot_or_human
   - search_jobs
   - stop
   - thankyou
+  - inform_experience
+  - inform_location
+  - inform_degree
+  - inform_company
+
+# use DIETClassifier
+# use synonyms to normalize the entity
+# entity groups
 
 entities:
   - title
+  - location
+  - company
+  - degree
 
 slots:
   title:
@@ -21,16 +32,44 @@ slots:
     mappings:
       - type: from_entity
         entity: title
+        conditions:
+      - active_loop: job_search_form
+        requested_slot: title
+  
+  degree:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: degree
+
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: location
+      - active_loop: job_search_form
+        requested_slot: location
+
+  experience:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: experience
 
 forms:
   job_search_form:
     required_slots:
       - title
+      - location
 
 actions:
   - action_reset_all_slots
   - action_search_jobs
   - validate_job_search_form
+  - action_cumulative_search
 
 responses:
   utter_greet:
@@ -47,6 +86,10 @@ responses:
     - text: Are you sure you want to stop the form?
   utter_ask_continue:
     - text: Would you like to continue the form?
+  utter_ask_location:
+    - text: Where do you want to work?
+  utter_ask_degree:
+    - text: What is the highest degree that you have?
   utter_ask_rephrase:
     - text: I'm sorry, I didn't quite understand that. Could you rephrase?
   utter_default:
