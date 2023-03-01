@@ -1,0 +1,9 @@
+version: "3.1"
+nlu:
+  - intent: chitchat/ask_howdoing
+    examples: |
+      - Ahoy matey how are you?
+      - Are you ok?
+      - Do you feel good?
+      - Do you have a great day?
+  

@@ -10,6 +10,8 @@ intents:
   - search_jobs
   - stop
   - thankyou
+  - chitchat:
+      use_entities: []
 
 entities:
   - title
@@ -34,13 +36,15 @@ actions:
 
 responses:
   utter_greet:
-    - text: Hey! How are you?
+    - text: Woof woof! Hello there, human friend! I am Rover and I'm here to help you and cheer you on. Let's start this job search adventure together. 
   utter_goodbye:
-    - text: Bye
+    - text: I hope our conversation has brought some joy and wagging tails to your day. Bye-bye for now! 
+    - text: Woof woof! Thank you, and have a great day!
+    - text: Remember that my virtual paws are always open to chat with you again in the future. Bye-bye!
   utter_iamabot:
-    - text: I am a bot, powered by Rasa.
+    - text: I am a virtual dog, powered by Rasa.
   utter_youarewelcome:
-    - text: You're very welcome.
+    - text:  Woof woof! You're welcome!
   utter_ask_title:
     - text: Sure thing! What type of job are you looking for?
   utter_ask_stop:

@@ -20,6 +20,11 @@ rules:
     steps:
       - intent: thankyou
       - action: utter_youarewelcome
+  
+  - rule: Respond to chitchat
+    steps:
+      - intent: chitchat
+      - action: utter_chitchat
 
   # Fallback Rule according to: https://rasa.com/docs/rasa/next/fallback-handoff/#two-stage-fallback
   - rule: Implementation of the Two-Stage-Fallback
@@ -62,3 +67,5 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: action_search_jobs
+
+  

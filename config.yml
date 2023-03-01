@@ -34,6 +34,10 @@ pipeline:
   - name: ResponseSelector
     epochs: 100
     scale_loss: false
+  - name: ResponseSelector
+    retrieval_intent: chitchat
+    scale_loss: false
+    epochs: 100
   - name: FallbackClassifier
     threshold: 0.7
 

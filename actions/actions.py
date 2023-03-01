@@ -41,7 +41,7 @@ class ValidateJobSearchForm(FormValidationAction):
         else:
             self.filled_slots.add("title")
             dispatcher.utter_message(
-                text=f"Okay, we will look for a job as {slot_value}"
+                text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you.  {slot_value}"
             )
             return {"title": slot_value}
 
