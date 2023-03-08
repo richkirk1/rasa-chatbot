@@ -15,6 +15,9 @@ intents:
 
 entities:
   - title
+  - PERSON
+  - GPE
+  - MONEY
 
 slots:
   title:
@@ -23,11 +26,25 @@ slots:
     mappings:
       - type: from_entity
         entity: title
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: GPE
+  salary:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: MONEY
 
 forms:
   job_search_form:
     required_slots:
       - title
+      - location
+      - salary
 
 actions:
   - action_reset_all_slots
@@ -47,6 +64,10 @@ responses:
     - text:  Woof woof! You're welcome!
   utter_ask_title:
     - text: Sure thing! What type of job are you looking for?
+  utter_ask_salary:
+    - text: How much would you like to make (include currency)?
+  utter_ask_location:
+    - text: Where would you like to work?
   utter_ask_stop:
     - text: Are you sure you want to stop the form?
   utter_ask_continue:

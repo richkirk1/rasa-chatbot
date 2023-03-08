@@ -52,6 +52,8 @@ class ActionSearchJobs(Action):
     @dataclass
     class JobSearch:
         title: str
+        location: str
+        salary: str
 
     def name(self) -> str:
         return "action_search_jobs"
@@ -65,14 +67,14 @@ class ActionSearchJobs(Action):
         Returns:
             JobSearch: dataclass that contains information for searching
         """
-        return self.JobSearch(title=tracker.get_slot("title"))
+        return self.JobSearch(title=tracker.get_slot("title"), location=tracker.get_slot("location"), salary=tracker.get_slot("salary"))
 
-    def searchForJobs(self, search: JobSearch, offset: int) -> list[JobPosting]:
+    def searchForJobs(self, search: JobSearch, offset: int) -> JobPosting:
         return session.scalars(statement=(
             select(JobPosting)
-            .where(JobPosting.title.in_([search.title.title()]))
+            .where(JobPosting.title.in_([search.title.title()]) & JobPosting.region.in_([search.location]) & JobPosting.salary.in_([search.salary]))
             .order_by(JobPosting._id)
-            .limit(3)
+            .limit(1)
             .offset(offset)
         )).all()
 
@@ -84,9 +86,13 @@ class ActionSearchJobs(Action):
         Args:
             dispatcher (CollectingDispatcher): Rasa class used to generate responses to send back to user
         """
-        for post in postings:
+        if postings:
             dispatcher.utter_message(
-                text=f"{post.title}, {post.company}, {post.region}, {post.locality}"
+                text=f"{postings[0].title}, {postings[1].company}, {postings[2].region}, {postings[3].locality}"
+            )
+        else:
+            dispatcher.utter_message(
+                text="There were no jobs found"
             )
 
     def run(
