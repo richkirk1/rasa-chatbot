@@ -8,20 +8,21 @@ from json import load
 from logging import Logger, getLogger
 from typing import Any, Dict, Final, List, Optional, Text
 
-from .models import JobPosting
-
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
-
 from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+from sqlalchemy import create_engine, select
+from sqlalchemy.orm import Session
+
+from .states import state_code_to_state_name, state_name_to_state_code
+from .models import JobPosting
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-engine = create_engine(f'sqlite:///job_postings.db')
+engine = create_engine(f"sqlite:///job_postings.db")
 session = Session(engine)
+
 
 class ValidateJobSearchForm(FormValidationAction):
     filled_slots = set()
@@ -67,16 +68,26 @@ class ActionSearchJobs(Action):
         Returns:
             JobSearch: dataclass that contains information for searching
         """
-        return self.JobSearch(title=tracker.get_slot("title"), location=tracker.get_slot("location"), salary=tracker.get_slot("salary"))
+        return self.JobSearch(
+            title=tracker.get_slot("title"),
+            location=tracker.get_slot("location"),
+            salary=tracker.get_slot("salary"),
+        )
 
     def searchForJobs(self, search: JobSearch, offset: int) -> JobPosting:
-        return session.scalars(statement=(
-            select(JobPosting)
-            .where(JobPosting.title.in_([search.title.title()]) & JobPosting.region.in_([search.location]) & JobPosting.salary.in_([search.salary]))
-            .order_by(JobPosting._id)
-            .limit(1)
-            .offset(offset)
-        )).all()
+        return session.scalars(
+            statement=(
+                select(JobPosting)
+                .where(
+                    JobPosting.title.in_([search.title.title()])
+                    & JobPosting.region.in_([state_name_to_state_code[search.location]])
+                    & JobPosting.salary.in_([int(search.salary)])
+                )
+                .order_by(JobPosting._id)
+                .limit(1)
+                .offset(offset)
+            )
+        ).all()
 
     def outputJobSearch(
         self, dispatcher: CollectingDispatcher, postings: list[JobPosting]
@@ -88,12 +99,10 @@ class ActionSearchJobs(Action):
         """
         if postings:
             dispatcher.utter_message(
-                text=f"{postings[0].title}, {postings[1].company}, {postings[2].region}, {postings[3].locality}"
+                text=f"{postings[0].title}, {postings[0].company}, {postings[0].region}, {postings[0].locality}"
             )
         else:
-            dispatcher.utter_message(
-                text="There were no jobs found"
-            )
+            dispatcher.utter_message(text="There were no jobs found")
 
     def run(
         self,

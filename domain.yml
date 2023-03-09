@@ -38,6 +38,12 @@ slots:
     mappings:
       - type: from_entity
         entity: MONEY
+  name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: PERSON
 
 forms:
   job_search_form:

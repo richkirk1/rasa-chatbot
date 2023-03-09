@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, Column, String, Float, ForeignKey, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Float, ForeignKey, String, Table, create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 engine = create_engine('sqlite:///job_postings.db')
 Base = declarative_base()
