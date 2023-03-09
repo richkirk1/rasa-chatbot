@@ -201,10 +201,4 @@ nlu:
       - [data scientist](title) preferably
       - I'm seeking a job in [IT](title)
       - I would prefer a job as a [project manager](title), thanks
-  
-  - intent: inform_name
-    examples: |
-       - I'm [Gladys Bynum](name)
-       - I'm [Harvey Cordano](name)
-       - I'm [Jeanine Hwang](name)
-       - I'm [Virginia Mason](name)
+
