@@ -7,28 +7,48 @@ from dataclasses import dataclass
 from json import load
 from logging import Logger, getLogger
 from typing import Any, Dict, Final, List, Optional, Text
-
+from functools import reduce
 from rasa_sdk import Action, FormValidationAction, Tracker
-from rasa_sdk.events import AllSlotsReset
+from rasa_sdk.events import AllSlotsReset, SlotSet, ActiveLoop
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, Query
 
 from .states import state_code_to_state_name, state_name_to_state_code
 from .models import JobPosting
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-engine = create_engine(f"sqlite:///job_postings.db")
-session = Session(engine)
+ENGINE = create_engine(f"sqlite:///job_postings.db")
+session = Session(ENGINE)
+job_postings: List[JobPosting] = []
 
+# ======================================================== #
+# ===================== Form Actions ===================== #
+# ======================================================== #
 
 class ValidateJobSearchForm(FormValidationAction):
-    filled_slots = set()
-
     def name(self) -> Text:
         return "validate_job_search_form"
+
+    async def required_slots(
+        self,
+        domain_slots: List[Text],
+        dispatcher: "CollectingDispatcher",
+        tracker: "Tracker",
+        domain: "DomainDict",
+    ) -> List[Text]:
+        additional_slots = []
+        if (
+            tracker.slots.get("use_location")
+            and tracker.slots.get("use_location") is True
+        ):
+            additional_slots.append("location")
+        
+        return await super().required_slots(
+            domain_slots + additional_slots, dispatcher, tracker, domain
+        )
 
     def validate_title(
         self,
@@ -38,15 +58,20 @@ class ValidateJobSearchForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Validate `title` value."""
+        dispatcher.utter_message(
+            text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you."
+        )
+        dispatcher.utter_send_button()
+        return {"title": slot_value}
 
-        if "title" in self.filled_slots:
-            return {}
-        else:
-            self.filled_slots.add("title")
-            dispatcher.utter_message(
-                text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you.  {slot_value}"
-            )
-            return {"title": slot_value}
+    def validate_use_location(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        return {"use_location": slot_value}
 
     def validate_location(
         self,
@@ -56,23 +81,21 @@ class ValidateJobSearchForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Validate `location` value."""
+        dispatcher.utter_message(
+            text=f"Okay, we will look for a job in {state_name_to_state_code[slot_value.title()]}"
+        )
+        return {"location": state_name_to_state_code[slot_value.title()]}
+    
 
-        if "location" in self.filled_slots:
-            return {}
-        else:
-            self.filled_slots.add("location")
-            dispatcher.utter_message(
-                text=f"Okay, we will look for a job in {state_name_to_state_code[slot_value.title()]}"
-            )
-            return {"location": state_name_to_state_code[slot_value.title()]}
-
+# ======================================================== #
+# ==================== Utility Actions =================== #
+# ======================================================== #
 
 class ActionSearchJobs(Action):
     @dataclass
     class JobSearch:
         title: str
         location: str
-        salary: str
 
     def name(self) -> str:
         return "action_search_jobs"
@@ -89,39 +112,35 @@ class ActionSearchJobs(Action):
         return self.JobSearch(
             title=tracker.get_slot("title"),
             location=tracker.get_slot("location"),
-            salary=tracker.get_slot("salary"),
         )
+    
+    def buildJobSearchQuery(self, search: JobSearch) -> Query:
+        query = session.query(JobPosting)
+        if search.title:
+            query = query.where(JobPosting.title.ilike(f"%{search.title}%"))
+        if search.location:
+            query = query.where(JobPosting.region == f"{search.location}")
+        return query
 
-    def searchForJobs(self, search: JobSearch, offset: int) -> list[JobPosting]:
-        return session.scalars(
-            statement=(
-                select(JobPosting)
-                .where(
-                    JobPosting.title.ilike(f"%{search.title}%")
-                )
-                .where(
-                    JobPosting.region == search.location
-                )
-                .order_by(JobPosting._id)
-                .limit(1)
-                .offset(offset)
-            )
-        ).all()
+    def searchForJobs(
+        self, query: Query
+    ) -> List[JobPosting]:
+        return query.limit(25).all()
 
     def outputJobSearch(
-        self, dispatcher: CollectingDispatcher, postings: list[JobPosting]
-    ) -> None:
+        self, dispatcher: CollectingDispatcher, postings: List[JobPosting]
+    ) -> List[Dict[str, Any]]:
         """Output important data of a JobPosting
 
         Args:
             dispatcher (CollectingDispatcher): Rasa class used to generate responses to send back to user
         """
         if postings:
-            dispatcher.utter_message(
-                text=f"{postings[0].title}, {postings[0].company}, {postings[0].region}, {postings[0].locality}"
-            )
-        else:
-            dispatcher.utter_message(text="There were no jobs found")
+            job_postings = postings
+            dispatcher.utter_message(text=f"{job_postings[0].title}\n{job_postings[0].company}\n{job_postings[0].region}")
+            return [SlotSet("found_jobs", True)]
+        dispatcher.utter_message(text="Sorry bout that, there were no jobs found :(")
+        return []
 
     def run(
         self,
@@ -129,11 +148,9 @@ class ActionSearchJobs(Action):
         tracker: Tracker,
         domain: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
-        search = self.buildJobSearch(tracker=tracker)
-        postings = self.searchForJobs(search=search, offset=0)
-        self.outputJobSearch(dispatcher=dispatcher, postings=postings)
-        return []
-
+        query: Query = self.buildJobSearchQuery(self.buildJobSearch(tracker=tracker))
+        postings = self.searchForJobs(query=query)
+        return self.outputJobSearch(dispatcher=dispatcher, postings=postings)
 
 class ResetAllSlots(Action):
     def name(self):

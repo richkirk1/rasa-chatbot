@@ -1,54 +1,10 @@
 version: "3.1"
 
 stories:
-  - story: Set title and location in form
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: search_jobs
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - slot_was_set:
-          - title: software development
-      - slot_was_set:
-          - title: software development
-      - slot_was_set:
-          - requested_slot: location
-      - slot_was_set:
-          - location: Ohio
-      - slot_was_set:
-          - location: Ohio
-      - slot_was_set:
-          - requested_slot: null
-      - active_loop: null
-      - action: action_search_jobs
-      - action: action_reset_all_slots
-      - intent: goodbye
-      - action: utter_goodbye
-
-  - story: Set title and location in request
-    steps:
-      - intent: search_jobs
-        entities:
-          - title: developer
-          - GPE: New York
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - title: developer
-      - slot_was_set:
-          - location: New York
-      - slot_was_set:
-          - requested_slot: null
-      - active_loop: null
-      - action: action_search_jobs
-      - action: action_reset_all_slots
-      - intent: thankyou
-      - action: utter_youarewelcome
-
-  - story: Stop early 1
+  # ==========================================================
+  # ================ STOP FORM EARLY STORIES =================
+  # ==========================================================
+  - story: Stop form early 1
     steps:
       - intent: search_jobs
       - action: job_search_form
@@ -60,13 +16,12 @@ stories:
       - intent: affirm
       - action: action_deactivate_loop
       - active_loop: null
-      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
       - intent: goodbye
       - action: utter_goodbye
 
-  - story: Stop early 2
+  - story: Stop form early 2
     steps:
       - intent: greet
       - action: utter_greet
@@ -80,11 +35,10 @@ stories:
       - intent: stop
       - action: action_deactivate_loop
       - active_loop: null
-      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
 
-  - story: Interrupt with greet and stop early
+  - story: Stop form early 3
     steps:
       - intent: search_jobs
       - action: job_search_form
@@ -97,11 +51,10 @@ stories:
       - intent: stop
       - action: action_deactivate_loop
       - active_loop: null
-      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
 
-  - story: Interrupt with is_bot_or_human and stop early
+  - story: Stop form early 4
     steps:
       - intent: search_jobs
       - action: job_search_form
@@ -114,16 +67,39 @@ stories:
       - intent: deny
       - action: action_deactivate_loop
       - active_loop: null
-      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
-
-  - story: chitchat
+  # ==========================================================
+  # ===================== HAPPY STORIES ======================
+  # ==========================================================
+  - story: Set title in form; dont use location
     steps:
-        - intent: chitchat
-        - action: utter_chitchat
+      - intent: greet
+      - action: utter_greet
+      - intent: search_jobs
+      - action: job_search_form
+      - active_loop: job_search_form
+      - slot_was_set:
+          - requested_slot: title
+      - slot_was_set:
+          - title: developer
+      - slot_was_set:
+          - title: developer
+      - slot_was_set:
+          - requested_slot: use_location
+      - slot_was_set:
+          - location: false
+      - slot_was_set:
+          - location: false
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_search_jobs
+      - action: action_reset_all_slots
+      - intent: goodbye
+      - action: utter_goodbye
 
-  - story: interactive_story_1
+  - story: Set title in form; use location
     steps:
     - intent: search_jobs
     - action: job_search_form
@@ -131,18 +107,24 @@ stories:
     - slot_was_set:
       - requested_slot: title
     - slot_was_set:
-      - title: application engineer
+      - title: developer
     - slot_was_set:
-      - title: application engineer
+      - title: developer
+    - slot_was_set:
+      - requested_slot: use_location
+    - slot_was_set:
+      - use_location: true
+    - slot_was_set:
+      - use_location: true
     - slot_was_set:
       - requested_slot: location
     - slot_was_set:
-      - location: New York
+      - title: New York
     - slot_was_set:
-      - location: New York
-    - slot_was_set:
-      - requested_slot: null
+      - title: New York
     - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
     - action: action_search_jobs
     - action: action_reset_all_slots
     - intent: thankyou
@@ -151,16 +133,8 @@ stories:
   - story: interactive_story_2
     steps:
     - intent: search_jobs
-      entities:
-      - GPE: Ohio
-    - slot_was_set:
-      - location: Ohio
     - action: job_search_form
     - active_loop: job_search_form
-    - slot_was_set:
-      - location: Ohio
-    - slot_was_set:
-      - location: Ohio
     - slot_was_set:
       - requested_slot: title
     - slot_was_set:
@@ -168,65 +142,47 @@ stories:
     - slot_was_set:
       - title: developer
     - slot_was_set:
+      - requested_slot: use_location
+    - slot_was_set:
+      - use_location: false
+    - slot_was_set:
+      - use_location: false
+    - slot_was_set:
       - requested_slot: null
     - active_loop: null
     - action: action_search_jobs
+    - slot_was_set:
+      - found_jobs: true
     - action: action_reset_all_slots
-    - intent: goodbye
-    - action: utter_goodbye
-
-  - story: interactive_story_3
-    steps:
     - intent: search_jobs
       entities:
-      - title: application engineer
+      - title: business analyst
     - slot_was_set:
-      - title: application engineer
+      - title: business analyst
     - action: job_search_form
     - active_loop: job_search_form
     - slot_was_set:
-      - title: application engineer
+      - title: business analyst
     - slot_was_set:
-      - title: application engineer
+      - title: business analyst
+    - slot_was_set:
+      - requested_slot: use_location
+    - slot_was_set:
+      - use_location: true
+    - slot_was_set:
+      - use_location: true
     - slot_was_set:
       - requested_slot: location
-    - intent: is_bot_or_human
-    - action: utter_iamabot
-    - action: utter_ask_continue
-    - intent: deny
-    - action: action_deactivate_loop
-    - active_loop: null
-    - action: action_reset_all_slots
+    - slot_was_set:
+      - location: California
+    - slot_was_set:
+      - location: CA
     - slot_was_set:
       - requested_slot: null
-    - intent: goodbye
-    - action: utter_goodbye
-    - intent: search_jobs
-    - action: job_search_form
-    - active_loop: job_search_form
-    - slot_was_set:
-      - requested_slot: title
-    - intent: is_bot_or_human
-    - action: utter_iamabot
-    - action: utter_ask_continue
-    - intent: affirm
-    - action: job_search_form
-    - slot_was_set:
-      - requested_slot: title
-    - slot_was_set:
-      - title: business analyst
-    - slot_was_set:
-      - title: business analyst
-    - slot_was_set:
-      - requested_slot: location
-    - slot_was_set:
-      - location: Pennsylvania
-    - slot_was_set:
-      - location: Pennsylvania
     - slot_was_set:
       - requested_slot: null
     - active_loop: null
     - action: action_search_jobs
+    - slot_was_set:
+      - found_jobs: true
     - action: action_reset_all_slots
-    - intent: goodbye
-    - action: utter_goodbye

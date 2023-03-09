@@ -19,7 +19,7 @@ class MessageReciever extends Component {
     }
 
     triggerNext(messages) {
-        if(messages.length > 0){
+        if(messages.length > 1){
             this.props.triggerNextStep({value: messages.splice(1, messages.length), trigger: 'bloop'});
         }
         else {
@@ -40,14 +40,12 @@ class MessageReciever extends Component {
         var temp = this.state.bot_uttered;
         this.socket.on('bot_uttered', (response) => {
             temp.push(response.text);
-            this.setState({bot_uttered: temp, loading: false});   
-
-           
+            this.setState({bot_uttered: temp, loading: false});
         })
 
         setTimeout(() => {
-            this.triggerNext(temp);
-        }, 500);
+            this.triggerNext(this.state.bot_uttered);
+        }, 1000);
 
         this.setState({loading: true});
     }

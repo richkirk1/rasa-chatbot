@@ -23,7 +23,7 @@ class MessageParser extends Component {
 
         setTimeout(() => {
             this.triggerNext(msgs);
-        }, 500);
+        }, 1000);
   
     }
 

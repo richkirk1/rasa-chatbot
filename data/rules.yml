@@ -50,7 +50,18 @@ rules:
       - action: utter_greet
       - action: utter_ask_continue
 
-  # Form Rules
+  - rule: goodbye in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+      - action: action_deactivate_loop
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+
+  # Job Search Form
   - rule: Activate Job Search Form
     steps:
       - intent: search_jobs
@@ -68,4 +79,3 @@ rules:
       - action: action_search_jobs
       - action: action_reset_all_slots
 
-  
