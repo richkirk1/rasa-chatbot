@@ -8,18 +8,20 @@ from json import load
 from logging import Logger, getLogger
 from typing import Any, Dict, Final, List, Optional, Text
 
-from nltk.stem.snowball import SnowballStemmer
+from .models import JobPosting
+
+from sqlalchemy import create_engine, select
+from sqlalchemy.orm import Session
+
 from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 
 LOGGER: Final[Logger] = getLogger(__name__)
-STEMMER = SnowballStemmer("english")
 
-with open("./data/jobs.json") as f:
-    data = load(f)
-
+engine = create_engine(f'sqlite:///job_postings.db')
+session = Session(engine)
 
 class ValidateJobSearchForm(FormValidationAction):
     filled_slots = set()
@@ -51,19 +53,6 @@ class ActionSearchJobs(Action):
     class JobSearch:
         title: str
 
-    @dataclass
-    class JobPosting:
-        ID: int
-        Title: str
-        Company: str
-        Duration: str
-        Location: str
-        JobDescription: str
-        JobRequirment: str
-        RequiredQual: str
-        Salary: str
-        AboutC: str
-
     def name(self) -> str:
         return "action_search_jobs"
 
@@ -76,39 +65,28 @@ class ActionSearchJobs(Action):
         Returns:
             JobSearch: dataclass that contains information for searching
         """
-        return self.JobSearch(title=STEMMER.stem(tracker.get_slot("title")))
+        return self.JobSearch(title=tracker.get_slot("title"))
 
-    def searchForJobs(self, search: JobSearch) -> Optional[JobPosting]:
-        """Query DB for records matching data from JobSearch; return the first result found
-
-        Args:
-            search (JobSearch): dataclass that contains information for searching
-
-        Returns:
-            JobPosting: all job posting data of first result found; None if not found
-        """
-        for record in data:
-            if search.title in STEMMER.stem(record["Title"].lower()):
-                return self.JobPosting(**record)
-
-        return None
+    def searchForJobs(self, search: JobSearch, offset: int) -> list[JobPosting]:
+        return session.scalars(statement=(
+            select(JobPosting)
+            .where(JobPosting.title.in_([search.title.title()]))
+            .order_by(JobPosting._id)
+            .limit(3)
+            .offset(offset)
+        )).all()
 
     def outputJobSearch(
-        self, dispatcher: CollectingDispatcher, posting: Optional[JobPosting]
+        self, dispatcher: CollectingDispatcher, postings: list[JobPosting]
     ) -> None:
         """Output important data of a JobPosting
 
         Args:
             dispatcher (CollectingDispatcher): Rasa class used to generate responses to send back to user
-            posting (JobPosting): dataclass that contains information from a job posting
         """
-        if posting:
+        for post in postings:
             dispatcher.utter_message(
-                text=f"Here is a job matching your criteria:\n{posting.Title},\n{posting.Company},\n{posting.JobDescription}"
-            )
-        else:
-            dispatcher.utter_message(
-                text=f"Sorry, we could not find a job matching your search criteria."
+                text=f"{post.title}, {post.company}, {post.region}, {post.locality}"
             )
 
     def run(
@@ -118,8 +96,8 @@ class ActionSearchJobs(Action):
         domain: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
         search = self.buildJobSearch(tracker=tracker)
-        posting = self.searchForJobs(search=search)
-        self.outputJobSearch(dispatcher=dispatcher, posting=posting)
+        postings = self.searchForJobs(search=search, offset=0)
+        self.outputJobSearch(dispatcher=dispatcher, postings=postings)
         return []
 
 
