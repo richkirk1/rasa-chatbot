@@ -55,6 +55,14 @@ responses:
     - text: I'm sorry, I didn't quite understand that. Could you rephrase?
   utter_default:
     - text: I'm sorry, I can't help you.
+  utter_chitchat/ask_howdoing:
+    - text: As a chatbot, I don't experience emotions in the way that a real dog would.
+  utter_chitchat/ask_freetime:
+    - text: When I'm not helping job seekers find their dream jobs, I'm constantly learning and updating my knowledge base, so that I can provide even better assistance in the future. 
+    - text: In my free time, I love to learn about new topics and explore the world around me. 
+  utter_chitchat/ask_name:
+    - text: Woof woof! Hello there, my name is Rover! I'm so excited to help you with your job search and make a new friend.
+    - text: Woof woof! Hey there, I'm Rover, a happy-go-lucky pup with a wagging tail and a heart full of love.
 
 session_config:
   session_expiration_time: 60
