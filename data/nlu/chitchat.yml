@@ -1,0 +1,24 @@
+version: "3.1"
+nlu:
+  - intent: chitchat/ask_howdoing
+    examples: |
+      - Ahoy matey how are you?
+      - Are you ok?
+      - Do you feel good?
+      - Do you have a great day?
+  - intent: chitchat/ask_name
+    examples: |
+      - what is your name?
+      - name?
+      - what do you call yourself?
+      - what can i call you?
+      - do you have a name?
+      - what are you refered to as?
+  - intent: chitchat/ask_freetime
+    examples: |
+      - what do you do in your offtime?
+      - what do you do for fun?
+      - do you like to play games?
+      - how do you spend your off days?
+
+  

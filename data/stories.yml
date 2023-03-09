@@ -159,3 +159,7 @@ stories:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
+  - story: chitchat
+    steps:
+        - intent: chitchat
+        - action: utter_chitchat
