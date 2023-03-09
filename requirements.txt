@@ -2,3 +2,4 @@ rasa==3.4.0
 black
 spacy
 isort
+nltk
