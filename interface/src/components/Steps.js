@@ -1,51 +1,6 @@
-import React, {Component} from "react";
-import socket from '../socketio';
-import {Loading} from 'react-simple-chatbot';
-
-//Plans to seperate this class and it be called within steps
-class ActionProvider extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            bot_uttered: null,
-            loading: true,
-        }
-
-        this.url = "http://localhost:5005/";
-        this.socket = socket(this.url);
-
-    }
-
-    componentDidMount(){
-        const { steps } = this.props;
-        const message = steps.user_uttered.value;
-
-        this.socket.emit('user_uttered', {
-            'message': message,
-            'session_id': this.socket.id,
-        });
-
-        this.socket.on('bot_uttered', (response) => {
-            console.log(response);
-            this.setState({bot_uttered: response.text, loading: false});
-
-        })
-
-        this.setState({loading: true});
-    }
-
-    render() {
-        const {bot_uttered, loading} = this.state;
-        if(loading){
-            return (<div><Loading/></div>)
-        }
-        return (
-            <div>{bot_uttered}</div>
-        )     
-    }
-}
-
+import React from "react";
+import MessageReciever from './MessageReciever';
+import MessageParser from "./MessageParser";
 
 const steps =
 [   
@@ -61,9 +16,16 @@ const steps =
     },
     {
         id: 'bot_uttered',
-        component: <ActionProvider/>,
+        component: <MessageReciever/>,
         asMessage: true,
-        trigger: 'user_uttered',
+        waitAction: true,
+    },
+    {
+        id: 'bloop',
+        component: <MessageParser/>,
+        asMessage: true,
+        waitAction: true,
+        
     }
 ];
 
