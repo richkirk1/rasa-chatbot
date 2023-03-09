@@ -50,7 +50,6 @@ forms:
     required_slots:
       - title
       - location
-      - salary
 
 actions:
   - action_reset_all_slots

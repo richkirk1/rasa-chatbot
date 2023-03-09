@@ -48,6 +48,24 @@ class ValidateJobSearchForm(FormValidationAction):
             )
             return {"title": slot_value}
 
+    def validate_location(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `location` value."""
+
+        if "location" in self.filled_slots:
+            return {}
+        else:
+            self.filled_slots.add("location")
+            dispatcher.utter_message(
+                text=f"Okay, we will look for a job in {state_name_to_state_code[slot_value]}"
+            )
+            return {"location": state_name_to_state_code[slot_value]}
+
 
 class ActionSearchJobs(Action):
     @dataclass
@@ -74,14 +92,15 @@ class ActionSearchJobs(Action):
             salary=tracker.get_slot("salary"),
         )
 
-    def searchForJobs(self, search: JobSearch, offset: int) -> JobPosting:
+    def searchForJobs(self, search: JobSearch, offset: int) -> list[JobPosting]:
         return session.scalars(
             statement=(
                 select(JobPosting)
                 .where(
-                    JobPosting.title.in_([search.title.title()])
-                    & JobPosting.region.in_([state_name_to_state_code[search.location]])
-                    & JobPosting.salary.in_([int(search.salary)])
+                    JobPosting.title.ilike(f"%{search.title}%")
+                )
+                .where(
+                    JobPosting.region == search.location
                 )
                 .order_by(JobPosting._id)
                 .limit(1)
