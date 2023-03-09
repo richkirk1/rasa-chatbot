@@ -62,9 +62,9 @@ class ValidateJobSearchForm(FormValidationAction):
         else:
             self.filled_slots.add("location")
             dispatcher.utter_message(
-                text=f"Okay, we will look for a job in {state_name_to_state_code[slot_value]}"
+                text=f"Okay, we will look for a job in {state_name_to_state_code[slot_value.title()]}"
             )
-            return {"location": state_name_to_state_code[slot_value]}
+            return {"location": state_name_to_state_code[slot_value.title()]}
 
 
 class ActionSearchJobs(Action):

@@ -1,12 +1,11 @@
 version: "3.1"
 
 stories:
-  - story: Set title in form
+  - story: Set title and location in form
     steps:
       - intent: greet
       - action: utter_greet
       - intent: search_jobs
-      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
@@ -22,24 +21,19 @@ stories:
       - slot_was_set:
           - location: Ohio
       - slot_was_set:
-          - requested_slot: salary
-      - slot_was_set:
-          - salary: $60,000
-      - slot_was_set:
-          - salary: $60,000
-      - slot_was_set:
           - requested_slot: null
       - active_loop: null
       - action: action_search_jobs
+      - action: action_reset_all_slots
       - intent: goodbye
       - action: utter_goodbye
 
-  - story: Set title in request
+  - story: Set title and location in request
     steps:
       - intent: search_jobs
         entities:
           - title: developer
-      - action: action_reset_all_slots
+          - GPE: New York
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
@@ -47,18 +41,16 @@ stories:
       - slot_was_set:
           - location: New York
       - slot_was_set:
-          - salary: $100000
-      - slot_was_set:
           - requested_slot: null
       - active_loop: null
       - action: action_search_jobs
+      - action: action_reset_all_slots
       - intent: thankyou
       - action: utter_youarewelcome
 
   - story: Stop early 1
     steps:
       - intent: search_jobs
-      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
@@ -68,6 +60,7 @@ stories:
       - intent: affirm
       - action: action_deactivate_loop
       - active_loop: null
+      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
       - intent: goodbye
@@ -78,7 +71,6 @@ stories:
       - intent: greet
       - action: utter_greet
       - intent: search_jobs
-      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
@@ -88,13 +80,13 @@ stories:
       - intent: stop
       - action: action_deactivate_loop
       - active_loop: null
+      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
 
   - story: Interrupt with greet and stop early
     steps:
       - intent: search_jobs
-      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
@@ -105,13 +97,13 @@ stories:
       - intent: stop
       - action: action_deactivate_loop
       - active_loop: null
+      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
 
   - story: Interrupt with is_bot_or_human and stop early
     steps:
       - intent: search_jobs
-      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
       - slot_was_set:
@@ -122,8 +114,10 @@ stories:
       - intent: deny
       - action: action_deactivate_loop
       - active_loop: null
+      - action: action_reset_all_slots
       - slot_was_set:
           - requested_slot: null
+
   - story: chitchat
     steps:
         - intent: chitchat
@@ -132,7 +126,6 @@ stories:
   - story: interactive_story_1
     steps:
     - intent: search_jobs
-    - action: action_reset_all_slots
     - action: job_search_form
     - active_loop: job_search_form
     - slot_was_set:
@@ -148,15 +141,10 @@ stories:
     - slot_was_set:
       - location: New York
     - slot_was_set:
-      - requested_slot: salary
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
       - requested_slot: null
     - active_loop: null
     - action: action_search_jobs
+    - action: action_reset_all_slots
     - intent: thankyou
     - action: utter_youarewelcome
 
@@ -165,10 +153,8 @@ stories:
     - intent: search_jobs
       entities:
       - GPE: Ohio
-      - GPE: Ohio
     - slot_was_set:
       - location: Ohio
-    - action: action_reset_all_slots
     - action: job_search_form
     - active_loop: job_search_form
     - slot_was_set:
@@ -182,40 +168,26 @@ stories:
     - slot_was_set:
       - title: developer
     - slot_was_set:
-      - requested_slot: salary
-    - slot_was_set:
-      - salary: '75000'
-    - slot_was_set:
-      - salary: '75000'
-    - slot_was_set:
       - requested_slot: null
     - active_loop: null
     - action: action_search_jobs
+    - action: action_reset_all_slots
     - intent: goodbye
     - action: utter_goodbye
 
-  - story: interactive_story_1
+  - story: interactive_story_3
     steps:
     - intent: search_jobs
       entities:
       - title: application engineer
-      - MONEY: $80,000
-      - MONEY: 80,000
     - slot_was_set:
       - title: application engineer
-    - slot_was_set:
-      - salary: 80,000
-    - action: action_reset_all_slots
     - action: job_search_form
     - active_loop: job_search_form
     - slot_was_set:
       - title: application engineer
     - slot_was_set:
-      - salary: 80,000
-    - slot_was_set:
       - title: application engineer
-    - slot_was_set:
-      - salary: 80,000
     - slot_was_set:
       - requested_slot: location
     - intent: is_bot_or_human
@@ -224,12 +196,12 @@ stories:
     - intent: deny
     - action: action_deactivate_loop
     - active_loop: null
+    - action: action_reset_all_slots
     - slot_was_set:
       - requested_slot: null
     - intent: goodbye
     - action: utter_goodbye
     - intent: search_jobs
-    - action: action_reset_all_slots
     - action: job_search_form
     - active_loop: job_search_form
     - slot_was_set:
@@ -252,149 +224,9 @@ stories:
     - slot_was_set:
       - location: Pennsylvania
     - slot_was_set:
-      - requested_slot: salary
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
       - requested_slot: null
     - active_loop: null
     - action: action_search_jobs
-    - intent: goodbye
-    - action: utter_goodbye
-
-  - story: interactive_story_1
-    steps:
-    - intent: search_jobs
     - action: action_reset_all_slots
-    - action: job_search_form
-    - active_loop: job_search_form
-    - slot_was_set:
-      - requested_slot: title
-    - slot_was_set:
-      - title: application engineer
-    - slot_was_set:
-      - title: application engineer
-    - slot_was_set:
-      - requested_slot: location
-    - slot_was_set:
-      - location: New York
-    - slot_was_set:
-      - location: New York
-    - slot_was_set:
-      - requested_slot: salary
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
-      - requested_slot: null
-    - active_loop: null
-    - action: action_search_jobs
-    - intent: thankyou
-    - action: utter_youarewelcome
-
-  - story: interactive_story_2
-    steps:
-    - intent: search_jobs
-      entities:
-      - GPE: Ohio
-      - GPE: Ohio
-    - slot_was_set:
-      - location: Ohio
-    - action: action_reset_all_slots
-    - action: job_search_form
-    - active_loop: job_search_form
-    - slot_was_set:
-      - location: Ohio
-    - slot_was_set:
-      - location: Ohio
-    - slot_was_set:
-      - requested_slot: title
-    - slot_was_set:
-      - title: developer
-    - slot_was_set:
-      - title: developer
-    - slot_was_set:
-      - requested_slot: salary
-    - slot_was_set:
-      - salary: '75000'
-    - slot_was_set:
-      - salary: '75000'
-    - slot_was_set:
-      - requested_slot: null
-    - active_loop: null
-    - action: action_search_jobs
-    - intent: goodbye
-    - action: utter_goodbye
-
-  - story: interactive_story_1
-    steps:
-    - intent: search_jobs
-      entities:
-      - title: application engineer
-      - MONEY: $80,000
-      - MONEY: 80,000
-    - slot_was_set:
-      - title: application engineer
-    - slot_was_set:
-      - salary: 80,000
-    - action: action_reset_all_slots
-    - action: job_search_form
-    - active_loop: job_search_form
-    - slot_was_set:
-      - title: application engineer
-    - slot_was_set:
-      - salary: 80,000
-    - slot_was_set:
-      - title: application engineer
-    - slot_was_set:
-      - salary: 80,000
-    - slot_was_set:
-      - requested_slot: location
-    - intent: is_bot_or_human
-    - action: utter_iamabot
-    - action: utter_ask_continue
-    - intent: deny
-    - action: action_deactivate_loop
-    - active_loop: null
-    - slot_was_set:
-      - requested_slot: null
-    - intent: goodbye
-    - action: utter_goodbye
-    - intent: search_jobs
-    - action: action_reset_all_slots
-    - action: job_search_form
-    - active_loop: job_search_form
-    - slot_was_set:
-      - requested_slot: title
-    - intent: is_bot_or_human
-    - action: utter_iamabot
-    - action: utter_ask_continue
-    - intent: affirm
-    - action: job_search_form
-    - slot_was_set:
-      - requested_slot: title
-    - slot_was_set:
-      - title: business analyst
-    - slot_was_set:
-      - title: business analyst
-    - slot_was_set:
-      - requested_slot: location
-    - slot_was_set:
-      - location: Pennsylvania
-    - slot_was_set:
-      - location: Pennsylvania
-    - slot_was_set:
-      - requested_slot: salary
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
-      - salary: '50000'
-    - slot_was_set:
-      - requested_slot: null
-    - active_loop: null
-    - action: action_search_jobs
     - intent: goodbye
     - action: utter_goodbye

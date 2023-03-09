@@ -6,6 +6,8 @@ intents:
   - goodbye
   - greet
   - inform_title
+  - inform_location
+  - inform_salary
   - is_bot_or_human
   - search_jobs
   - stop

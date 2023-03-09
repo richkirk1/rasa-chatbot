@@ -6,10 +6,21 @@ nlu:
       - Are you ok?
       - Do you feel good?
       - Do you have a great day?
+      - what's going on??
+      - wazzup
+      - How you doing bot???
+      - whaddup Rover!
+      - ayo, what's up?
+      - what is up Rover bot?
+      - how have you been?
+      - how are you doing today
   - intent: chitchat/ask_name
     examples: |
       - what is your name?
       - name?
+      - What should I call you?
+      - can I know your name?
+      - what do the developers call you?
       - what do you call yourself?
       - what can i call you?
       - do you have a name?
@@ -20,5 +31,10 @@ nlu:
       - what do you do for fun?
       - do you like to play games?
       - how do you spend your off days?
+      - what do you do on the weekends
+      - How do you spend your time??
+      - What are you doing when you arent helping people look for jobs?
+      - What would you do if you had free time right now?
+      - What do you like to do on your off days??
 
   

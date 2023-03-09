@@ -54,7 +54,6 @@ rules:
   - rule: Activate Job Search Form
     steps:
       - intent: search_jobs
-      - action: action_reset_all_slots
       - action: job_search_form
       - active_loop: job_search_form
 
@@ -67,5 +66,6 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: action_search_jobs
+      - action: action_reset_all_slots
 
   
