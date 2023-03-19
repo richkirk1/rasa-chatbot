@@ -3,16 +3,11 @@
 #
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
+import meilisearch
 from dataclasses import dataclass
 from json import load
 from logging import Logger, getLogger
 from typing import Any, Dict, Final, List, Optional, Text
-
-from .models import JobPosting
-
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
-
 from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
@@ -20,8 +15,9 @@ from rasa_sdk.types import DomainDict
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-engine = create_engine(f'sqlite:///job_postings.db')
-session = Session(engine)
+client = meilisearch.Client('http://meilisearch:7700')
+jobs = load(open('jobs.json'))
+client.index('jobs').add_documents(jobs)
 
 class ValidateJobSearchForm(FormValidationAction):
     filled_slots = set()
@@ -43,7 +39,7 @@ class ValidateJobSearchForm(FormValidationAction):
         else:
             self.filled_slots.add("title")
             dispatcher.utter_message(
-                text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you.  {slot_value}"
+                text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you."
             )
             return {"title": slot_value}
 
@@ -56,50 +52,14 @@ class ActionSearchJobs(Action):
     def name(self) -> str:
         return "action_search_jobs"
 
-    def buildJobSearch(self, tracker: Tracker) -> JobSearch:
-        """Build JobSearch dataclass from filled slots
-
-        Args:
-            tracker (Tracker): Rasa class that represents the current state of the bots memory
-
-        Returns:
-            JobSearch: dataclass that contains information for searching
-        """
-        return self.JobSearch(title=tracker.get_slot("title"))
-
-    def searchForJobs(self, search: JobSearch, offset: int) -> list[JobPosting]:
-        return session.scalars(statement=(
-            select(JobPosting)
-            .where(JobPosting.title.in_([search.title.title()]))
-            .order_by(JobPosting._id)
-            .limit(3)
-            .offset(offset)
-        )).all()
-
-    def outputJobSearch(
-        self, dispatcher: CollectingDispatcher, postings: list[JobPosting]
-    ) -> None:
-        """Output important data of a JobPosting
-
-        Args:
-            dispatcher (CollectingDispatcher): Rasa class used to generate responses to send back to user
-        """
-        for post in postings:
-            dispatcher.utter_message(
-                text=f"{post.title}, {post.company}, {post.region}, {post.locality}"
-            )
-
     def run(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
-        search = self.buildJobSearch(tracker=tracker)
-        postings = self.searchForJobs(search=search, offset=0)
-        self.outputJobSearch(dispatcher=dispatcher, postings=postings)
+        dispatcher.utter_message(text=client.index('jobs').search('.NET'))
         return []
-
 
 class ResetAllSlots(Action):
     def name(self):

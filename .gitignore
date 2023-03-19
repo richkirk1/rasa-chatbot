@@ -25,8 +25,7 @@ venv/
 
 # Python Builds
 *.pyc/
-
-# -- Interface --
+__pycache__/
 
 # Nodejs
 node_modules

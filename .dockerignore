@@ -1,0 +1,25 @@
+# Rasa
+models/
+results/
+terms/
+.rasa/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Python Builds
+*.pyc/
+__pycache__/
+
+# testing
+/coverage
+
+# production
+build
+
+
+# Nodejs
+interface/node_modules
