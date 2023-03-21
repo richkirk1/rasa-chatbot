@@ -46,6 +46,25 @@ class ValidateJobSearchForm(FormValidationAction):
 
 class ActionSearchJobs(Action):
     @dataclass
+    class JobPosting:
+        salary: str
+        education: str
+        description: str
+        title: str
+        skills: str
+        locality: str
+        posted_at: str
+        longitude: int
+        postalCode: str
+        url: str
+        experience: str
+        latitude: int
+        _id: str
+        company: str 
+        region: str
+        employment_type: str
+ 
+    @dataclass
     class JobSearch:
         title: str
 
@@ -58,7 +77,11 @@ class ActionSearchJobs(Action):
         tracker: Tracker,
         domain: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
-        dispatcher.utter_message(text=client.index('jobs').search('.NET'))
+        title = tracker.get_slot("title")
+        LOGGER.info(msg=f"Finding jobs for {title}")
+        results = client.index('jobs').search(title)['hits']
+        posting = self.JobPosting(*results[0])
+        dispatcher.utter_message(text=posting.title)
         return []
 
 class ResetAllSlots(Action):
@@ -66,5 +89,6 @@ class ResetAllSlots(Action):
         return "action_reset_all_slots"
 
     def run(self, dispatcher, tracker, domain):
+        LOGGER.info(msg="Resetting all slots")
         ValidateJobSearchForm.filled_slots = set()
         return [AllSlotsReset()]
