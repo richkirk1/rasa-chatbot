@@ -15,8 +15,8 @@ from rasa_sdk.types import DomainDict
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-client = meilisearch.Client('http://meilisearch:7700')
-jobs = load(open('jobs.json'))
+client = meilisearch.Client('http://localhost:7700')
+jobs = load(open('./actions/jobs.json'))
 client.index('jobs').add_documents(jobs)
 
 class ValidateJobSearchForm(FormValidationAction):
@@ -71,17 +71,47 @@ class ActionSearchJobs(Action):
     def name(self) -> str:
         return "action_search_jobs"
 
+    def build_job_search_query(self, tracker: Tracker) -> JobSearch:
+        title = tracker.get_slot("title")
+        LOGGER.info(
+            msg=f"Building query for job with title: {title}"
+        )
+        return self.JobSearch(
+            title=title
+        )
+    
+    def search_jobs(self, search: JobSearch) -> List[JobPosting]:
+        limit = 3
+        LOGGER.info(
+            msg=f"Searching with Meilisearch with a limit of {limit}"
+        )
+        return [self.JobPosting(*res.values()) for res in client.index('jobs').search(query=search.title, opt_params={
+            "limit": limit
+        })['hits']]
+
+    def output_job_postings(self, postings: List[JobPosting], dispatcher: CollectingDispatcher) -> None:
+        if not postings:
+            LOGGER.info(
+                msg="No jobs were found"
+            )
+            dispatcher.utter_message(text="Sorry, we couldn't find any jobs matching that criteria... :(")
+            return
+
+        for posting in postings:
+            LOGGER.info(
+                msg=f"{posting}"
+            )
+            dispatcher.utter_message(text=f"{posting.title}")
+
     def run(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
-        title = tracker.get_slot("title")
-        LOGGER.info(msg=f"Finding jobs for {title}")
-        results = client.index('jobs').search(title)['hits']
-        posting = self.JobPosting(*results[0])
-        dispatcher.utter_message(text=posting.title)
+        search = self.build_job_search_query(tracker=tracker)
+        postings = self.search_jobs(search=search)
+        self.output_job_postings(postings=postings, dispatcher=dispatcher)
         return []
 
 class ResetAllSlots(Action):

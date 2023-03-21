@@ -1,6 +1,6 @@
 FROM rasa/rasa-sdk:3.4.0
 
-WORKDIR /app
+WORKDIR /app/actions
 
 COPY requirements-actions.txt requirements-actions.txt
 

@@ -24,8 +24,10 @@ venv/
 .idea/
 
 # Python Builds
-*.pyc/
 __pycache__/
+*.py[cod]
+*$py.class
+
 
 # Nodejs
 node_modules
@@ -40,3 +42,6 @@ build
 logs
 *.log
 
+# Meilisearch
+meilisearch
+data.ms/
