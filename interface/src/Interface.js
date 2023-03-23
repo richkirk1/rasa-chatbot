@@ -1,24 +1,24 @@
-import ChatBot from 'react-simple-chatbot';
-import BotAvatar from './icons/rover.jpg';
-import { Steps, Theme } from './components';
-import { ThemeProvider } from 'styled-components';
-import './Interface.css'
+import { Chatbot } from 'react-chatbot-kit';
+import 'react-chatbot-kit/build/main.css';
+import './App.css';
 
-function Interface() {
+import MessageParser from './components/MessageParser';
+import ActionProvider from './components/ActionProvider';
+import config from './components/config';
+
+
+function App() {
   return (
-    <div>
-      <ThemeProvider theme={Theme}>
-      <ChatBot  
-        botAvatar={BotAvatar}  
-        headerTitle='' 
-        placeholder='Enter your message...' 
-        hideUserAvatar={true} 
-        steps={Steps}>
-      </ChatBot>
-      </ThemeProvider>
+    <div className="App">
+      <header className="App-header">
+      <Chatbot 
+        config={config}
+        messageParser={MessageParser}
+        actionProvider={ActionProvider}
+      />
+      </header>
     </div>
   );
 }
 
-
-export default Interface;
+export default App;
