@@ -1,6 +1,5 @@
 import socket from '../socketio';
 
-// MessageParser starter code
 class MessageParser {
     constructor(actionProvider, state) {
       this.actionProvider = actionProvider;
@@ -17,7 +16,7 @@ class MessageParser {
 
         socketio.on('bot_uttered', (response) => {
             console.log(response);
-            this.actionProvider.addMessage(response.text);
+            this.actionProvider.addMessage(response, socketio);
         })
     }
 }
