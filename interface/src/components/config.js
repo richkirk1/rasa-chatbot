@@ -1,8 +1,9 @@
 import { createChatBotMessage } from "react-chatbot-kit";
-import ButtonWidget from "./ButtonWidget";
+import ButtonWidget from "../widgets/ButtonWidget";
 
 const config = {
   initialMessages: [createChatBotMessage(`Hello! I am Rover, how can I help you with your job search today?`)],
+  
   widgets: [
     {
       widgetName: "buttonWidget",

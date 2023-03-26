@@ -15,8 +15,9 @@ function App() {
         config={config}
         messageParser={MessageParser}
         actionProvider={ActionProvider}
+        headerText='Rover Support'
       />
-      </header>
+      </header> 
     </div>
   );
 }
