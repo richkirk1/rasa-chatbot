@@ -29,9 +29,14 @@ pip install --upgrade pip
 pip install -r requirements.txt
 python3 -m spacy download en_core_web_md
 pip install -e .
-pip install ntlk
 ```
-    
+
+#### Meilisearch
+
+```{bash}
+curl -L https://install.meilisearch.com | sh
+```
+https://docs.meilisearch.com/learn/getting_started/quick_start.html
 #### Node.js
 
 ```{bash}
@@ -58,6 +63,11 @@ In another terminal window, run the bot:
 
 ```{bash}
 rasa shell --debug
+```
+
+In the last terminal window, run meilisearch:
+```{bash}
+./meilisearch
 ```
 
 The `--debug` flag produces a lot of output meant to help understand how the bot is working under the hood. To have a normal conversation, run without the `--debug` flag.

@@ -3,16 +3,11 @@
 #
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
+import meilisearch
 from dataclasses import dataclass
 from json import load
 from logging import Logger, getLogger
 from typing import Any, Dict, Final, List, Optional, Text
-
-from .models import JobPosting
-
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
-
 from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.events import AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
@@ -20,8 +15,9 @@ from rasa_sdk.types import DomainDict
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-engine = create_engine(f'sqlite:///job_postings.db')
-session = Session(engine)
+client = meilisearch.Client('http://localhost:7700')
+jobs = load(open('./actions/jobs.json'))
+client.index('jobs').add_documents(jobs)
 
 class ValidateJobSearchForm(FormValidationAction):
     filled_slots = set()
@@ -43,12 +39,31 @@ class ValidateJobSearchForm(FormValidationAction):
         else:
             self.filled_slots.add("title")
             dispatcher.utter_message(
-                text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you.  {slot_value}"
+                text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you."
             )
             return {"title": slot_value}
 
 
 class ActionSearchJobs(Action):
+    @dataclass
+    class JobPosting:
+        salary: str
+        education: str
+        description: str
+        title: str
+        skills: str
+        locality: str
+        posted_at: str
+        longitude: int
+        postalCode: str
+        url: str
+        experience: str
+        latitude: int
+        _id: str
+        company: str 
+        region: str
+        employment_type: str
+ 
     @dataclass
     class JobSearch:
         title: str
@@ -56,38 +71,37 @@ class ActionSearchJobs(Action):
     def name(self) -> str:
         return "action_search_jobs"
 
-    def buildJobSearch(self, tracker: Tracker) -> JobSearch:
-        """Build JobSearch dataclass from filled slots
+    def build_job_search_query(self, tracker: Tracker) -> JobSearch:
+        title = tracker.get_slot("title")
+        LOGGER.info(
+            msg=f"Building query for job with title: {title}"
+        )
+        return self.JobSearch(
+            title=title
+        )
+    
+    def search_jobs(self, search: JobSearch) -> List[JobPosting]:
+        limit = 3
+        LOGGER.info(
+            msg=f"Searching with Meilisearch with a limit of {limit}"
+        )
+        return [self.JobPosting(*res.values()) for res in client.index('jobs').search(query=search.title, opt_params={
+            "limit": limit
+        })['hits']]
 
-        Args:
-            tracker (Tracker): Rasa class that represents the current state of the bots memory
-
-        Returns:
-            JobSearch: dataclass that contains information for searching
-        """
-        return self.JobSearch(title=tracker.get_slot("title"))
-
-    def searchForJobs(self, search: JobSearch, offset: int) -> list[JobPosting]:
-        return session.scalars(statement=(
-            select(JobPosting)
-            .where(JobPosting.title.in_([search.title.title()]))
-            .order_by(JobPosting._id)
-            .limit(3)
-            .offset(offset)
-        )).all()
-
-    def outputJobSearch(
-        self, dispatcher: CollectingDispatcher, postings: list[JobPosting]
-    ) -> None:
-        """Output important data of a JobPosting
-
-        Args:
-            dispatcher (CollectingDispatcher): Rasa class used to generate responses to send back to user
-        """
-        for post in postings:
-            dispatcher.utter_message(
-                text=f"{post.title}, {post.company}, {post.region}, {post.locality}"
+    def output_job_postings(self, postings: List[JobPosting], dispatcher: CollectingDispatcher) -> None:
+        if not postings:
+            LOGGER.info(
+                msg="No jobs were found"
             )
+            dispatcher.utter_message(text="Sorry, we couldn't find any jobs matching that criteria... :(")
+            return
+
+        for posting in postings:
+            LOGGER.info(
+                msg=f"{posting}"
+            )
+            dispatcher.utter_message(text=f"{posting.title}")
 
     def run(
         self,
@@ -95,16 +109,16 @@ class ActionSearchJobs(Action):
         tracker: Tracker,
         domain: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
-        search = self.buildJobSearch(tracker=tracker)
-        postings = self.searchForJobs(search=search, offset=0)
-        self.outputJobSearch(dispatcher=dispatcher, postings=postings)
+        search = self.build_job_search_query(tracker=tracker)
+        postings = self.search_jobs(search=search)
+        self.output_job_postings(postings=postings, dispatcher=dispatcher)
         return []
-
 
 class ResetAllSlots(Action):
     def name(self):
         return "action_reset_all_slots"
 
     def run(self, dispatcher, tracker, domain):
+        LOGGER.info(msg="Resetting all slots")
         ValidateJobSearchForm.filled_slots = set()
         return [AllSlotsReset()]
