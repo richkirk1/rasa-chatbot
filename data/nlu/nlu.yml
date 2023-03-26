@@ -270,3 +270,16 @@ nlu:
       - [server developer](title)
       - [computer modeling](title)
       - [system administrator](title)
+  - intent: inform_employment_type
+    examples: |
+      - I would like a [full time]{"entity": "employment_type", "value": "FULL_TIME"} role please
+      - [Full Time]{"entity": "employment_type", "value": "FULL_TIME"}
+      - I want to work [full time]{"entity": "employment_type", "value": "FULL_TIME"} 
+      - i need some [temporary]{"entity": "employment_type", "value": "TEMPORARY"} work
+      - can i see [temporary]{"entity": "employment_type", "value": "TEMPORARY"} roles
+      - I want to work [part time]{"entity": "employment_type", "value": "PART_TIME"}.
+      - [PART_TIME]{"entity": "employment_type", "value": "PART_TIME"}
+      - I want to see some [part time]{"entity": "employment_type", "value": "PART_TIME"} jobs
+      - I want work as a [contractor]{"entity": "employment_type", "value": "CONTRACTOR"}
+      - can i do some [contracting]{"entity": "employment_type", "value": "CONTRACTOR"} work
+      - [contractor]{"entity": "employment_type", "value": "CONTRACTOR"}
