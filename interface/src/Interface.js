@@ -22,7 +22,4 @@ function App() {
   );
 }
 
-
-const header = document.getElementById
-
 export default App;
