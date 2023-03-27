@@ -45,6 +45,21 @@ class ValidateJobSearchForm(FormValidationAction):
             )
             return {"title": slot_value}
 
+    def validate_employment_type(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `employment_type` value."""
+
+        if "employment_type" in self.filled_slots:
+            return {}
+        else:
+            self.filled_slots.add("employment_type")
+            return {"employment_type": slot_value}
+
 
 class ActionSearchJobs(Action):
     @dataclass
