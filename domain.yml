@@ -6,6 +6,7 @@ intents:
   - goodbye
   - greet
   - inform_title
+  - inform_employment_type
   - is_bot_or_human
   - search_jobs
   - stop
@@ -15,6 +16,7 @@ intents:
 
 entities:
   - title
+  - employment_type
 
 slots:
   title:
@@ -23,11 +25,22 @@ slots:
     mappings:
       - type: from_entity
         entity: title
+  employment_type:
+    type: categorical
+    mappings:
+      - type: from_entity
+        entity: employment_type
+    values:
+      - FULL_TIME
+      - PART_TIME
+      - TEMPORARY
+      - CONTRACTOR
 
 forms:
   job_search_form:
     required_slots:
       - title
+      - employment_type
 
 actions:
   - action_reset_all_slots
@@ -47,6 +60,17 @@ responses:
     - text:  Woof woof! You're welcome!
   utter_ask_title:
     - text: Sure thing! What type of job are you looking for?
+  utter_ask_employment_type:
+    - buttons:
+      - payload: '/inform_employment_type{{"employment_type": "FULL_TIME"}}'
+        title: Full Time
+      - payload: '/inform_employment_type{{"employment_type": "PART_TIME"}}'
+        title: Part Time
+      - payload: '/inform_employment_type{{"employment_type": "TEMPORARY"}}'
+        title: Temporary
+      - payload: '/inform_employment_type{{"employment_type": "CONTRACTOR"}}'
+        title: Contractor
+      text: "What employment type?"
   utter_ask_stop:
     - text: Are you sure you want to stop the form?
   utter_ask_continue:

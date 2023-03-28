@@ -1,26 +1,28 @@
 import io from 'socket.io-client';
 
+var savedSocket;
+
 function getSessionID(socket) {
     const storage = localStorage;
     const storageKey = 'SESSION_ID';
     const savedID = storage.getItem(storageKey);
 
-
     if(!savedID) {
         const newID = socket.id;
         storage.setItem(storageKey, newID);
     }
-
-   
-
+    console.log(savedID);
     return savedID;
+    
 
 }
+
 
 export default function (socketUrl, customData, path) {
     const options = path ? { path } : {};
     const socket  = io(socketUrl, options);
-    
+    socket.removeAllListeners()
+
     //confirm connection
     socket.on('connect', () => {
         console.log(`Connected: ${getSessionID(socket)}`);
@@ -39,6 +41,7 @@ export default function (socketUrl, customData, path) {
     socket.on('disconnect', (reason) => {
         console.log(reason);
     });
+
 
     return socket;
 }

@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import socket from '../socketio';
-
-const socketio = socket("http://localhost:5005/");
+var socketio;
 
 class ActionProvider {
     constructor(
@@ -24,19 +24,21 @@ class ActionProvider {
    */
 
    messageHandler = (message) => {
-
+    if(!socketio)                 // looking to change this set up but running with this for right now. 
+      socketio = socket("http://localhost:5005/");
     
+    socketio.removeAllListeners() // ensures there is only one bot listening
+  
     socketio.emit('user_uttered', {
       'message': message,
-      'session_id': socketio.id,
+      'session_id': socketio.id
     });
 
     socketio.on('bot_uttered', (response) => {
-      console.log(response.attachment);
       console.log(response);
-      
       this.addBotMessage(response);
     });
+  
   }
 
    setMessage = (message) => {
@@ -52,7 +54,6 @@ class ActionProvider {
    Added user message here as it was already present and felt the message creation should be within actions.
   */
    addBotMessage = (response) => {
-    this.createChatBotMessage()
     const message = this.createChatBotMessage(response.text, (response.quick_replies ? {
         widget: 'buttonWidget',
         payload: {
