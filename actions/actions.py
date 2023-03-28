@@ -18,7 +18,9 @@ LOGGER: Final[Logger] = getLogger(__name__)
 client = meilisearch.Client('http://localhost:7700')
 jobs = load(open('./actions/jobs.json'))
 client.index('jobs').add_documents(jobs)
-
+client.index('jobs').update_filterable_attributes([
+    'employment_type'
+])
 class ValidateJobSearchForm(FormValidationAction):
     filled_slots = set()
 
@@ -42,6 +44,21 @@ class ValidateJobSearchForm(FormValidationAction):
                 text=f"Looking for a job can be ruff, but don't worry! We can work together to find the perfect job for you."
             )
             return {"title": slot_value}
+
+    def validate_employment_type(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `employment_type` value."""
+
+        if "employment_type" in self.filled_slots:
+            return {}
+        else:
+            self.filled_slots.add("employment_type")
+            return {"employment_type": slot_value}
 
 
 class ActionSearchJobs(Action):
@@ -67,17 +84,20 @@ class ActionSearchJobs(Action):
     @dataclass
     class JobSearch:
         title: str
+        employment_type: str
 
     def name(self) -> str:
         return "action_search_jobs"
 
     def build_job_search_query(self, tracker: Tracker) -> JobSearch:
         title = tracker.get_slot("title")
+        employment_type = tracker.get_slot("employment_type")
         LOGGER.info(
-            msg=f"Building query for job with title: {title}"
+            msg=f"Building query for job with title: {title}, employment type: {employment_type}"
         )
         return self.JobSearch(
-            title=title
+            title=title,
+            employment_type=employment_type
         )
     
     def search_jobs(self, search: JobSearch) -> List[JobPosting]:
@@ -86,7 +106,8 @@ class ActionSearchJobs(Action):
             msg=f"Searching with Meilisearch with a limit of {limit}"
         )
         return [self.JobPosting(*res.values()) for res in client.index('jobs').search(query=search.title, opt_params={
-            "limit": limit
+            'limit': limit,
+            'filter': f'employment_type = "{search.employment_type}"'
         })['hits']]
 
     def output_job_postings(self, postings: List[JobPosting], dispatcher: CollectingDispatcher) -> None:
@@ -113,6 +134,9 @@ class ActionSearchJobs(Action):
         postings = self.search_jobs(search=search)
         self.output_job_postings(postings=postings, dispatcher=dispatcher)
         return []
+
+
+
 
 class ResetAllSlots(Action):
     def name(self):
