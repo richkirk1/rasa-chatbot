@@ -1,5 +1,7 @@
 import socket from '../socketio';
 
+const socketio = socket("http://localhost:5005/");
+
 class ActionProvider {
     constructor(
      createChatBotMessage,
@@ -22,15 +24,17 @@ class ActionProvider {
    */
 
    messageHandler = (message) => {
-    const socketio = socket("http://localhost:5005/");
 
+    
     socketio.emit('user_uttered', {
       'message': message,
       'session_id': socketio.id,
     });
 
     socketio.on('bot_uttered', (response) => {
+      console.log(response.attachment);
       console.log(response);
+      
       this.addBotMessage(response);
     });
   }
@@ -48,6 +52,7 @@ class ActionProvider {
    Added user message here as it was already present and felt the message creation should be within actions.
   */
    addBotMessage = (response) => {
+    this.createChatBotMessage()
     const message = this.createChatBotMessage(response.text, (response.quick_replies ? {
         widget: 'buttonWidget',
         payload: {
