@@ -5,9 +5,6 @@ intents:
   - deny
   - goodbye
   - greet
-  - inform_title
-  - inform_location
-  - inform_employment_type
   - is_bot_or_human
   - search_jobs
   - stop

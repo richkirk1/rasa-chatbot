@@ -166,12 +166,14 @@ nlu:
       - Could you get me a job?
       - Can you help me in my job search?
       - I need to find a job for myself
-      - I'm hunting for a job in [product manager](title), any suggestions?
       - I need to find a job, could you help me?
-      - I'm looking for a job as a [developer], can you help?
       - I need help with the job search.
       - I'd like some help looking for a job.
-      - I am looking for a job in [software development](title)
+      - Can you help me get a job?
+      - I would like to find a job
+      - I'm hunting for a job in [network security](title), any suggestions?
+      - I'm looking for a job as an [ML Engineer], can you help?
+      - I am looking for a job in [Software Development](title)
       - Could you help me find a [product manager](job)?
       - I would like help finding a job in [IT](title)
       - Could you help me get a job as a [software developer](title)
@@ -184,12 +186,9 @@ nlu:
       - Can you assist me in finding a [project manager](title) job?
       - I would like to find a job in [IT](title)
       - I would like a job as a [developer](title)
-      - Can you help me get a job?
-      - I would like to find a job
       - I am looking for a [Network Administrator](title) job.
-      - I am looking for a [Graphic Designer](title) job.
       - I am looking for a [Programmer](title) job.
-      - I am looking for a [Game Developer](title) job.
+      - I am looking for a [Business Analyst](title) job
       - I am looking for a [Database administator](title) job.
       - I am looking for a [web developer](title) job.
       - I am looking for a [java programmer](title) job.
@@ -198,30 +197,18 @@ nlu:
       - Can you help me find a [Developer](title) job?
       - Can you help me find a [system administrator](title) job?
       - Can you help me find a [C++ programmer](title) job?
-      - Can you help me find a [photoshop graphic web designer](title) job?
+      - Can you help me find a [Front End Developer](title) job?
       - Can you help me find a [flash active scripting programmer](title) job?
-      - Can you help me find a [javascript programmer](title) job?
-      - Can you help me find a [html web designer](title) job?
+      - Can you help me find a [AWS programmer](title) job?
+      - Can you help me find a [.NET developer](title) job?
       - I'm interested in a [database architect](title) role
       - I'm interested in a [system architect](title) role
       - I'm interested in a [website moderator](title) role
-      - I'm interested in a [PHP trainer](title) role
       - I'm interested in a [backend developer](title) role
-      - I'm interested in a [Unix administrator](title) role
-      - I'm interested in a [ASP developer](title) role
-      - Could you help me find a [market developer](title)?
-      - Could you help me find a [manager](title)?
-      - Could you help me find a [C# developer](title)?
-      - Could you help me find a [.Net developer](title)?
-      - Could you help me find a [linux administrator](title)?
-      - Could you help me find a [java architect](title)?
-      - Could you help me find a [lead developer](title)?
-
-  - intent: inform_title
-    examples: |
-      - [software development](title)
-      - [designer](title)
-      - [IT](title)
+      - I'm interested to be a [systems administrator](title) role
+      - Could you help me find a [market developer](title) job?
+      - Could you help me find a [Java Architect](title) job?
+      - Could you help me find a [IT Manager](title) role?
       - I need a job in [software development](title)
       - I want a job for [project manager](title)
       - a [project manager]
@@ -231,30 +218,6 @@ nlu:
       - [data scientist](title) preferably
       - I'm seeking a job in [IT](title)
       - I would prefer a job as a [project manager](title), thanks
-      - [Network Administrator](title)
-      - [Graphic Designer](title)
-      - [Programmer](title)
-      - [Game Developer](title)
-      - [Database administator](title)
-      - [web developer](title)
-      - [java programmer](title)
-      - [quality assurance engineer](title)
-      - [software engineer](title)
-      - [Developer](title)
-      - [system administrator](title)
-      - [C++ programmer](title)
-      - [photoshop graphic web designer](title)
-      - [flash active scripting programmer](title)
-      - [javascript programmer](title)
-      - [html web designer](title)
-      - [database architect](title)
-      - [system architect](title)
-      - [website moderator](title)
-      - [PHP trainer](title)
-      - [backend developer](title)
-      - [Unix administrator](title)
-      - [ASP developer](title)
-      - [market developer](title)
       - [manager](title)
       - [C# developer](title)
       - [.Net developer](title)
@@ -270,9 +233,14 @@ nlu:
       - [server developer](title)
       - [computer modeling](title)
       - [system administrator](title)
-
-  - intent: inform_location
-    examples: |
+      - [javascript programmer](title)
+      - [html web designer](title)
+      - [database architect](title)
+      - [system architect](title)
+      - [website moderator](title)
+      - [Network Administrator](title)
+      - I want to work in [Chicago](GPE)
+      - I would like work in [Oklahoma](GPE)
       - I would like to work in [Ohio](GPE)
       - I want a job in [San Francisco](GPE)
       - [New York](GPE)
@@ -280,15 +248,18 @@ nlu:
       - [New Jersey](GPE)
       - Could you help me find a job in [atlanta](GPE)?
       - want job in [nashville](GPE) please!
-  - intent: inform_employment_type
-    examples: |
+      - I would like a [Software Engineer](title) job in [Birmingham](GPE) please
+      - I am interested in [security](title) roles in [New York](GPE)
+      - I would like to work in [Ohio] as a [business analyst](title) preferably
+      - I would like to find a job as a [Systems administrator](title) in [Seattle](GPE)
       - I would like a [full time]{"entity": "employment_type", "value": "FULL_TIME"} role please
       - [Full Time]{"entity": "employment_type", "value": "FULL_TIME"}
-      - I want to work [full time]{"entity": "employment_type", "value": "FULL_TIME"} 
+      - I want to work [full time]{"entity": "employment_type", "value": "FULL_TIME"}
       - i need some [temporary]{"entity": "employment_type", "value": "TEMPORARY"} work
       - can i see [temporary]{"entity": "employment_type", "value": "TEMPORARY"} roles
       - I want to work [part time]{"entity": "employment_type", "value": "PART_TIME"}.
       - [PART_TIME]{"entity": "employment_type", "value": "PART_TIME"}
+      - [part time]{"entity": "employment_type", "value": "PART_TIME"}
       - I want to see some [part time]{"entity": "employment_type", "value": "PART_TIME"} jobs
       - I want work as a [contractor]{"entity": "employment_type", "value": "CONTRACTOR"}
       - can i do some [contracting]{"entity": "employment_type", "value": "CONTRACTOR"} work
