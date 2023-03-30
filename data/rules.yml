@@ -50,6 +50,22 @@ rules:
       - action: utter_greet
       - action: utter_ask_continue
 
+  - rule: explain why need job title
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: ask_why
+      - action: utter_explain
+      - action: utter_ask_continue
+
+  - rule: provide examples in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: options
+      - action: utter_examples
+      - action: utter_ask_continue
+
   # Form Rules
   - rule: Activate Job Search Form
     steps:
@@ -67,3 +83,8 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: action_search_jobs
+
+  - rule: out-of-scope
+    steps:
+    - intent: out_of_scope
+    - action: utter_out_of_scope
