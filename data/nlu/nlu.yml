@@ -270,6 +270,16 @@ nlu:
       - [server developer](title)
       - [computer modeling](title)
       - [system administrator](title)
+
+  - intent: inform_location
+    examples: |
+      - I would like to work in [Ohio](GPE)
+      - I want a job in [San Francisco](GPE)
+      - [New York](GPE)
+      - [California](GPE)
+      - [New Jersey](GPE)
+      - Could you help me find a job in [atlanta](GPE)?
+      - want job in [nashville](GPE) please!
   - intent: inform_employment_type
     examples: |
       - I would like a [full time]{"entity": "employment_type", "value": "FULL_TIME"} role please

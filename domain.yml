@@ -6,6 +6,7 @@ intents:
   - goodbye
   - greet
   - inform_title
+  - inform_location
   - inform_employment_type
   - is_bot_or_human
   - search_jobs
@@ -20,6 +21,7 @@ intents:
 entities:
   - title
   - employment_type
+  - GPE
 
 slots:
   title:
@@ -38,11 +40,18 @@ slots:
       - PART_TIME
       - TEMPORARY
       - CONTRACTOR
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: GPE
 
 forms:
   job_search_form:
     required_slots:
       - title
+      - location
       - employment_type
 
 actions:
@@ -63,6 +72,8 @@ responses:
     - text:  Woof woof! You're welcome!
   utter_ask_title:
     - text: Sure thing! What type of job are you looking for?
+  utter_ask_location:
+    - text: Where would you like to work?
   utter_ask_employment_type:
     - buttons:
       - payload: '/inform_employment_type{{"employment_type": "FULL_TIME"}}'

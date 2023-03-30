@@ -68,7 +68,7 @@ class ActionProvider {
   };
 
   addCustomMessage = (response) => {
-    const message = this.createChatBotMessage('I found three jobs:', 
+    const message = this.createChatBotMessage('Here are the top three results matching your search:', 
         {
         widget: 'carousel',
         payload: {

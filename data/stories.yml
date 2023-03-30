@@ -16,28 +16,23 @@ stories:
       - slot_was_set:
           - title: software development
       - slot_was_set:
+          - requested_slot: location
+      - slot_was_set:
+          - location: Delaware
+      - slot_was_set:
+          - location: Delaware
+      - slot_was_set:
+          - requested_slot: employment_type
+      - slot_was_set:
+          - employment_type: FULL_TIME
+      - slot_was_set:
+          - employment_type: FULL_TIME
+      - slot_was_set:
           - requested_slot: null
       - active_loop: null
       - action: action_search_jobs
       - intent: goodbye
       - action: utter_goodbye
-
-  - story: Set title in request
-    steps:
-      - intent: search_jobs
-        entities:
-          - title: developer
-      - action: action_reset_all_slots
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - title: developer
-      - slot_was_set:
-          - requested_slot: null
-      - active_loop: null
-      - action: action_search_jobs
-      - intent: thankyou
-      - action: utter_youarewelcome
 
   - story: Stop early 1
     steps:
@@ -74,57 +69,6 @@ stories:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
-
-  - story: Stop early and resume
-    steps:
-      - intent: search_jobs
-      - action: action_reset_all_slots
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - intent: stop
-      - action: utter_ask_stop
-      - intent: deny
-      - action: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - slot_was_set:
-          - title: IT
-      - slot_was_set:
-          - title: IT
-      - slot_was_set:
-          - requested_slot: null
-      - active_loop: null
-      - action: action_search_jobs
-
-  - story: Interrupt with is_bot_or_human and continue
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: search_jobs
-      - action: action_reset_all_slots
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - intent: is_bot_or_human
-      - action: utter_iamabot
-      - action: utter_ask_continue
-      - intent: affirm
-      - action: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - slot_was_set:
-          - title: software development
-      - slot_was_set:
-          - title: software development
-      - slot_was_set:
-          - requested_slot: null
-      - active_loop: null
-      - action: action_search_jobs
-      - intent: thankyou
-      - action: utter_youarewelcome
 
   - story: Interrupt with greet and stop early
     steps:
