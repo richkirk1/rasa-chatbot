@@ -70,26 +70,9 @@ stories:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
+      - action: utter_stopping_form
       - intent: goodbye
       - action: utter_goodbye
-
-  - story: Stop early 2
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: search_jobs
-      - action: action_reset_all_slots
-      - action: job_search_form
-      - active_loop: job_search_form
-      - slot_was_set:
-          - requested_slot: title
-      - intent: stop
-      - action: utter_ask_stop
-      - intent: stop
-      - action: action_deactivate_loop
-      - active_loop: null
-      - slot_was_set:
-          - requested_slot: null
 
   - story: Interrupt with greet and stop early
     steps:
@@ -102,11 +85,12 @@ stories:
       - intent: greet
       - action: utter_greet
       - action: utter_ask_continue
-      - intent: stop
+      - intent: deny
       - action: action_deactivate_loop
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
+      - action: utter_stopping_form
 
   - story: Interrupt with is_bot_or_human and stop early
     steps:
@@ -124,6 +108,8 @@ stories:
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
+      - action: utter_stopping_form
+
   - story: chitchat
     steps:
         - intent: chitchat

@@ -155,6 +155,134 @@ nlu:
       - STOP
       - no, i would like to stop
 
+  - intent: ask_why
+    examples: |
+      - Why?
+      - Why do you need this information
+      - Why do you need to know that?
+
+  - intent: options
+    examples: |
+      - What are some examples?
+      - What are my options
+      - What are some job examples
+      - What do you need to know for this field?
+
+  - intent: out_of_scope
+    examples: |
+      - I want to order food
+      - I am looking for a movie
+      - I want to travel somewhere
+      - I am asking you an out of scope question
+      - What is 2 + 2?
+      - Who's the US President?
+      - Are you ready?
+      - Can I ask you questions first?
+      - Can you call me back?
+      - i want play ball
+      - flight catch up
+      - how do you like your coffee
+      - eshdtjfjfyk
+      - drhdtjfjfyj
+      - asdfgasdas
+      - winter is already leaving
+      - you already have that
+      - you should learn to count
+      - who are they?
+      - who let the dog out
+      - who's Bill Gates?
+      - which email should i send to ?
+      - where is mexico?
+      - wheres the party?
+      - which city are you talking about?
+      - whats the sign
+      - what's a newsletter?
+      - what is your address?
+      - what is the day ?
+      - what is the capital of india
+      - what is nice?
+      - what is machine learning
+      - what films do you like
+      - what doing
+      - umm
+      - wait a bit i am still reading
+      - what about wheather
+      - what are you doing now?
+      - that link doesn't work!
+      - tell me more about next best action
+      - that doesn't sound like a joke
+      - tricked  ya
+      - the one that is better than you
+      - show me a picture of a chicken
+      - search wikipedia
+      - refresh
+      - please play music
+      - please help with my ice cream it's dripping
+      - pizza
+      - oh wait i gave you my work email address can i change it?
+      - offer me lunch
+      - i want to find new friends
+      - i want to fly
+      - i want to see your happy customers
+      - is that any of your business
+      - i wanna party
+      - i told you already
+      - i am hungry
+      - how are the kids
+      - how can i test this
+      - great, I'd like to buy a house
+      - help with my life
+      - give me food
+      - doctor
+      - do you like movies
+      - did i break you
+      - can you understand ?
+      - can you help me with the docs?
+      - can you book dinner
+      - buy groceries
+      - are you sick
+      - are you vegan
+      - Why don't you answer?
+      - What's your backend system?
+      - Try it out broken
+      - Today
+      - The weather is good
+      - Can you please send me an uber
+      - sing me a song      - I would like to order food please
+      - Who is the president
+      - What is 2+2?
+      - Coudl you bring me a hot dog?
+      - Give me all the grapes in the world. Now.
+      - 1#INF
+      - !@#$%^&*()`~
+      - <>?:"{}|_+
+      - ,./;'[]\-=
+      - Ω
+      - ≈ç√∫˜µ≤
+      - ≥÷
+      - åß∂ƒ©˙∆˚¬…æ
+      - œ∑´
+      - ®†¥¨ˆøπ“‘
+      - ¡™£¢∞
+      - §¶•ªº–
+      - ≠
+      - 社會科學
+      - 院語學研究所
+      - 和製漢語
+      - (｡◕ ∀ ◕｡)
+      - ┬─┬ノ( º _ ºノ)
+      - 🚾 🆒 🆓 🆕
+      - Ṱ̺̺̕o͞ ̷i̲̬͇̪͙n̝̗͕v̟̜̘̦͟o̶̙̰̠kè͚̮̺̪̹̱̤ ̖t̝͕̳̣̻̪͞h̼͓̲̦̳̘̲e͇̣̰̦̬͎ ̢̼̻̱̘h͚͎͙̜̣̲ͅi̦̲̣̰̤v̻͍e̺̭̳̪̰-m̢iͅn̖̺̞̲̯̰d̵̼̟͙̩̼̘̳ ̞̥̱̳̭r̛̗̘e͙p͠r̼̞̻̭̗e̺̠̣͟s̘͇̳͍̝͉e͉̥̯̞̲͚̬͜ǹ̬͎͎̟̖͇̤t͍̬̤͓̼̭͘ͅi̪̱n͠g̴͉ ͏͉ͅc̬̟h͡a̫̻̯͘o̫̟̖͍̙̝͉s̗̦̲.̨̹͈̣
+      - ⒯⒣⒠ ⒬⒰⒤⒞⒦ ⒝⒭⒪⒲⒩ ⒡⒪⒳ ⒥⒰⒨⒫⒮ ⒪⒱⒠⒭ ⒯⒣⒠ ⒧⒜⒵⒴ ⒟⒪⒢
+      - <script\x20type="text/javascript">javascript:alert(25);</script>
+      - ABC<div style="x:\xE2\x80\x8Bexpression(javascript:alert(53)">DEF
+      - <a href="\x09javascript:javascript:alert(80)" id="fuzzelement1">test</a>
+      - "`'><script>\xF0\x90\x96\x9Ajavascript:alert(144)</script>
+      - 1'; DROP TABLE users-- 1
+      - eval("puts 'hello world'")
+      - ../../../../../../../../../../../etc/passwd%00
+      - Powerلُلُصّبُلُلصّبُررً ॣ ॣh ॣ ॣ冗
+
   - intent: search_jobs
     examples: |
       - I am looking for a job.
@@ -264,139 +392,3 @@ nlu:
       - I want work as a [contractor]{"entity": "employment_type", "value": "CONTRACTOR"}
       - can i do some [contracting]{"entity": "employment_type", "value": "CONTRACTOR"} work
       - [contractor]{"entity": "employment_type", "value": "CONTRACTOR"}
-
-  - intent: out_of_scope
-    examples: |
-      - I want to order food
-      - I am looking for a movie
-      - I want to travel somewhere
-      - I am asking you an out of scope question
-      - What is 2 + 2?
-      - Who's the US President?
-      - Are you ready?
-      - Can I ask you questions first?
-      - Can you call me back?
-      - i want play ball
-      - flight catch up
-      - how do you like your coffee
-      - eshdtjfjfyk
-      - drhdtjfjfyj
-      - asdfgasdas
-      - winter is already leaving
-      - you already have that
-      - you should learn to count
-      - who are they?
-      - who let the dog out
-      - who's Bill Gates?
-      - which email should i send to ?
-      - where is mexico?
-      - wheres the party?
-      - which city are you talking about?
-      - whats the sign
-      - what's a newsletter?
-      - what is your address?
-      - what is the day ?
-      - what is the capital of india
-      - what is nice?
-      - what is machine learning
-      - what films do you like
-      - what doing
-      - umm
-      - wait a bit i am still reading
-      - what about wheather
-      - what are you doing now?
-      - that link doesn't work!
-      - tell me more about next best action
-      - that doesn't sound like a joke
-      - tricked  ya
-      - the one that is better than you
-      - show me a picture of a chicken
-      - search wikipedia
-      - refresh
-      - please play music
-      - please help with my ice cream it's dripping
-      - pizza
-      - oh wait i gave you my work email address can i change it?
-      - offer me lunch
-      - i want to find new friends
-      - i want to fly
-      - i want to see your happy customers
-      - is that any of your business
-      - i wanna party
-      - i told you already
-      - i am hungry
-      - how are the kids
-      - how can i test this
-      - great, I'd like to buy a house
-      - help with my life
-      - give me food
-      - doctor
-      - do you like movies
-      - did i break you
-      - can you understand ?
-      - can you help me with the docs?
-      - can you book dinner
-      - buy groceries
-      - are you sick
-      - are you vegan
-      - Why don't you answer?
-      - What's your backend system?
-      - Try it out broken
-      - Today
-      - The weather is good
-      - Can you please send me an uber
-      - sing me a song
-
-      - undefined
-      - null
-      - true
-      - false
-      - none
-      - hasOwnProperty
-      - then
-      - constructor
-
-      - <foo val=“bar” />
-      - <script>alert(0)</script>
-      - " onfocus=JaVaSCript:alert(10) autofocus
-      - ;alert(18);
-      - <script\x0Atype="text/javascript">javascript:alert(31);</script>
-      - ABC<div style="x:\xE2\x80\x8Aexpression(javascript:alert(45)">DEF
-      - <a href="\x17javascript:javascript:alert(71)" id="fuzzelement1">test</a>
-      - `"'><img src=xxx:x \x0Conerror=javascript:alert(124)>
-      - "`'><script>\xC2\xA0javascript:alert(164)</script>
-      - <img src\x32=x onerror="javascript:alert(182)">
-      - <IMG SRC=# onmouseover="alert('208')">
-      - <SCRIPT SRC=//ha.ckers.org/.j>
-
-      - -
-      - --version
-      - /dev/null; touch /tmp/blns.fail ; echo
-      - $USER
-      - @{[system "touch /tmp/blns.fail"]}
-
-      - $ENV{'HOME'}
-      - %s%s%s%s%s
-      - %d
-      - File:///
-
-      - () { _; } >_[$($())] { touch /tmp/blns.shellshock2.fail; }
-
-      - Ṱ̺̺̕o͞ ̷i̲̬͇̪͙n̝̗͕v̟̜̘̦͟o̶̙̰̠kè͚̮̺̪̹̱̤ ̖t̝͕̳̣̻̪͞h̼͓̲̦̳̘̲e͇̣̰̦̬͎ ̢̼̻̱̘h͚͎͙̜̣̲ͅi̦̲̣̰̤v̻͍e̺̭̳̪̰-m̢iͅn̖̺̞̲̯̰d̵̼̟͙̩̼̘̳ ̞̥̱̳̭r̛̗̘e͙p͠r̼̞̻̭̗e̺̠̣͟s̘͇̳͍̝͉e͉̥̯̞̲͚̬͜ǹ̬͎͎̟̖͇̤t͍̬̤͓̼̭͘ͅi̪̱n͠g̴͉ ͏͉ͅc̬̟h͡a̫̻̯͘o̫̟̖͍̙̝͉s̗̦̲.̨̹͈̣
-
-      - ヽ༼ຈل͜ຈ༽ﾉ ヽ༼ຈل͜ຈ༽ﾉ
-      - (｡◕ ∀ ◕｡)
-      
-      - Ω≈ç√∫˜µ≤≥÷
-
-  - intent: ask_why
-    examples: |
-      - Why
-      - Why do you need to know that
-  
-  - intent: options
-    examples: |
-      - What are some examples
-      - What are my options
-      - What are some job examples
-      - What are some example titles

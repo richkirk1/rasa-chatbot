@@ -10,8 +10,8 @@ intents:
   - stop
   - thankyou
   - out_of_scope
-  - options
   - ask_why
+  - options
   - chitchat:
       use_entities: []
 
@@ -90,6 +90,10 @@ responses:
     - text: I'm sorry, I didn't quite understand that. Could you rephrase?
   utter_default:
     - text: I'm sorry, I can't help you.
+  utter_out_of_scope:
+    - text: Sorry, I can't handle that request.
+  utter_stopping_form:
+    - text: Stopping the job search process
   utter_chitchat/ask_howdoing:
     - text: As a chatbot, I don't experience emotions in the way that a real dog would.
   utter_chitchat/ask_freetime:
