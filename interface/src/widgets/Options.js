@@ -1,7 +1,7 @@
 import React from "react";
-import "./ButtonWidget.css";
+import "./Options.css";
 
-const ButtonWidget = (props) => {
+const Options = (props) => {
   const options = props.payload.options;
   const optionsMarkup = options.map((button, index) => (
     <button
@@ -19,4 +19,4 @@ const ButtonWidget = (props) => {
   return <div className="options-container">{optionsMarkup}</div>;
 };
 
-export default ButtonWidget;
+export default Options;

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import socket from '../socketio';
+var socketio;
 
 class ActionProvider {
     constructor(
@@ -22,17 +24,21 @@ class ActionProvider {
    */
 
    messageHandler = (message) => {
-    const socketio = socket("http://localhost:5005/");
-
+    if(!socketio)                 // looking to change this set up but running with this for right now. 
+      socketio = socket("http://localhost:5005/");
+    
+    socketio.removeAllListeners() // ensures there is only one bot listening
+  
     socketio.emit('user_uttered', {
       'message': message,
-      'session_id': socketio.id,
+      'session_id': socketio.id
     });
 
     socketio.on('bot_uttered', (response) => {
       console.log(response);
-      this.addBotMessage(response);
+      (response.attachment ? this.addCustomMessage(response) : this.addBotMessage(response));
     });
+  
   }
 
    setMessage = (message) => {
@@ -48,15 +54,31 @@ class ActionProvider {
    Added user message here as it was already present and felt the message creation should be within actions.
   */
    addBotMessage = (response) => {
-    const message = this.createChatBotMessage(response.text, (response.quick_replies ? {
-        widget: 'buttonWidget',
+    
+    const message = this.createChatBotMessage(response.text, 
+      (response.quick_replies ? {
+        widget: 'options',
         payload: {
           "options": response.quick_replies,
         },
-      } : undefined));
+      } : 
+        undefined));
 
     this.setMessage(message);
   };
+
+  addCustomMessage = (response) => {
+    const message = this.createChatBotMessage('I found three jobs:', 
+        {
+        widget: 'carousel',
+        payload: {
+          "attachment": response.attachment,
+        }});
+
+    this.setMessage(message);
+  }
+
+
 
   addUserMessage = (message) => {
     const response = this.createClientMessage(message);
