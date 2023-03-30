@@ -36,7 +36,7 @@ class ActionProvider {
 
     socketio.on('bot_uttered', (response) => {
       console.log(response);
-      this.addBotMessage(response);
+      (response.attachment ? this.addCustomMessage(response) : this.addBotMessage(response));
     });
   
   }
@@ -54,15 +54,31 @@ class ActionProvider {
    Added user message here as it was already present and felt the message creation should be within actions.
   */
    addBotMessage = (response) => {
-    const message = this.createChatBotMessage(response.text, (response.quick_replies ? {
-        widget: 'buttonWidget',
+    
+    const message = this.createChatBotMessage(response.text, 
+      (response.quick_replies ? {
+        widget: 'options',
         payload: {
           "options": response.quick_replies,
         },
-      } : undefined));
+      } : 
+        undefined));
 
     this.setMessage(message);
   };
+
+  addCustomMessage = (response) => {
+    const message = this.createChatBotMessage('I found three jobs:', 
+        {
+        widget: 'carousel',
+        payload: {
+          "attachment": response.attachment,
+        }});
+
+    this.setMessage(message);
+  }
+
+
 
   addUserMessage = (message) => {
     const response = this.createClientMessage(message);

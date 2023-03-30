@@ -117,12 +117,19 @@ class ActionSearchJobs(Action):
             )
             dispatcher.utter_message(text="Sorry, we couldn't find any jobs matching that criteria... :(")
             return
-
+        
+        posting_carousel = []
         for posting in postings:
             LOGGER.info(
                 msg=f"{posting}"
             )
-            dispatcher.utter_message(text=f"{posting.title}")
+
+            posting_carousel.append({
+                "title" : posting.title,
+                "company" : posting.company,
+            })
+            
+        dispatcher.utter_message(attachment= posting_carousel)
 
     def run(
         self,
