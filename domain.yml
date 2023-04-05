@@ -102,8 +102,6 @@ responses:
   utter_chitchat/ask_name:
     - text: Woof woof! Hello there, my name is Rover! I'm so excited to help you with your job search and make a new friend.
     - text: Woof woof! Hey there, I'm Rover, a happy-go-lucky pup with a wagging tail and a heart full of love.
-  utter_out_of_scope:
-    - text: Sorry, I can't handle that request.
   utter_explain:
     - text: I need to know the job title so I can help you find a job.
   utter_examples:
