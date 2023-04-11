@@ -26,6 +26,11 @@ rules:
       - intent: chitchat
       - action: utter_chitchat
 
+  - rule: Respond to out of scope
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+
   # Fallback Rule according to: https://rasa.com/docs/rasa/next/fallback-handoff/#two-stage-fallback
   - rule: Implementation of the Two-Stage-Fallback
     steps:
@@ -50,21 +55,48 @@ rules:
       - action: utter_greet
       - action: utter_ask_continue
 
-  - rule: explain why need job title
+  - rule: chitchat in job search form
     condition:
       - active_loop: job_search_form
     steps:
-      - intent: ask_why
-      - action: utter_explain
+      - intent: chitchat
+      - action: utter_chitchat
+      - action: utter_ask_continue
+  
+  - rule: continue in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - action: utter_ask_continue
+      - intent: deny
+      - action: action_deactivate_loop
+      - active_loop: null
+      - slot_was_set:
+        - requested_slot: null
+      - action: utter_stopping_form
+
+  - rule: continue in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - action: utter_ask_continue
+      - intent: affirm
+      - action: job_search_form
+
+  - rule: out of scope in job search form
+    condition:
+      - active_loop: job_search_form
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
       - action: utter_ask_continue
 
-  - rule: provide examples in job search form
+  - rule: ask stop in form stop
     condition:
       - active_loop: job_search_form
     steps:
-      - intent: options
-      - action: utter_examples
-      - action: utter_ask_continue
+      - intent: stop
+      - action: utter_ask_stop
 
   # Form Rules
   - rule: Activate Job Search Form

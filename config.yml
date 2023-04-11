@@ -26,6 +26,8 @@ pipeline:
     L1_c: 0.1
     L2_c: 0.1
     max_iterations: 50
+  - name: SpacyEntityExtractor
+    dimensions: ["GPE"]
   - name: EntitySynonymMapper
   - name: DIETClassifier
     entity_recognition: false

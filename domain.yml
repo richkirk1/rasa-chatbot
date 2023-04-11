@@ -5,21 +5,20 @@ intents:
   - deny
   - goodbye
   - greet
-  - inform_title
-  - inform_employment_type
   - is_bot_or_human
   - search_jobs
   - stop
   - thankyou
   - out_of_scope
-  - options
   - ask_why
+  - options
   - chitchat:
       use_entities: []
 
 entities:
   - title
   - employment_type
+  - GPE
 
 slots:
   title:
@@ -38,11 +37,18 @@ slots:
       - PART_TIME
       - TEMPORARY
       - CONTRACTOR
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: GPE
 
 forms:
   job_search_form:
     required_slots:
       - title
+      - location
       - employment_type
 
 actions:
@@ -63,6 +69,8 @@ responses:
     - text:  Woof woof! You're welcome!
   utter_ask_title:
     - text: Sure thing! What type of job are you looking for?
+  utter_ask_location:
+    - text: Where would you like to work?
   utter_ask_employment_type:
     - buttons:
       - payload: '/inform_employment_type{{"employment_type": "FULL_TIME"}}'
@@ -82,6 +90,10 @@ responses:
     - text: I'm sorry, I didn't quite understand that. Could you rephrase?
   utter_default:
     - text: I'm sorry, I can't help you.
+  utter_out_of_scope:
+    - text: Sorry, I can't handle that request.
+  utter_stopping_form:
+    - text: Stopping the job search process
   utter_chitchat/ask_howdoing:
     - text: As a chatbot, I don't experience emotions in the way that a real dog would.
   utter_chitchat/ask_freetime:
@@ -90,8 +102,6 @@ responses:
   utter_chitchat/ask_name:
     - text: Woof woof! Hello there, my name is Rover! I'm so excited to help you with your job search and make a new friend.
     - text: Woof woof! Hey there, I'm Rover, a happy-go-lucky pup with a wagging tail and a heart full of love.
-  utter_out_of_scope:
-    - text: Sorry, I can't handle that request.
   utter_explain:
     - text: I need to know the job title so I can help you find a job.
   utter_examples:

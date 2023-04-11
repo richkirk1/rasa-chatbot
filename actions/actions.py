@@ -3,7 +3,8 @@
 #
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
-import meilisearch
+from .states import state_code_to_state_name, state_name_to_state_code
+from meilisearch import Client
 from dataclasses import dataclass
 from json import load
 from logging import Logger, getLogger
@@ -15,10 +16,12 @@ from rasa_sdk.types import DomainDict
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-client = meilisearch.Client('http://localhost:7700')
+client = Client('http://localhost:7700')
 jobs = load(open('./actions/jobs.json'))
 client.index('jobs').add_documents(jobs)
 client.index('jobs').update_filterable_attributes([
+    'region',
+    'locality',
     'employment_type'
 ])
 class ValidateJobSearchForm(FormValidationAction):
@@ -60,6 +63,21 @@ class ValidateJobSearchForm(FormValidationAction):
             self.filled_slots.add("employment_type")
             return {"employment_type": slot_value}
 
+    def validate_location(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `location` value."""
+
+        if "location" in self.filled_slots:
+            return {}
+        else:
+            self.filled_slots.add("location")
+            return {"location": slot_value}
+
 
 class ActionSearchJobs(Action):
     @dataclass
@@ -84,6 +102,7 @@ class ActionSearchJobs(Action):
     @dataclass
     class JobSearch:
         title: str
+        location: str
         employment_type: str
 
     def name(self) -> str:
@@ -91,31 +110,39 @@ class ActionSearchJobs(Action):
 
     def build_job_search_query(self, tracker: Tracker) -> JobSearch:
         title = tracker.get_slot("title")
+        location = tracker.get_slot("location").lower().title()
         employment_type = tracker.get_slot("employment_type")
         LOGGER.info(
-            msg=f"Building query for job with title: {title}, employment type: {employment_type}"
+            msg=f"Building query for job with title: {title}, location: {location}, employment type: {employment_type}"
         )
         return self.JobSearch(
             title=title,
+            location=location,
             employment_type=employment_type
         )
-    
+
     def search_jobs(self, search: JobSearch) -> List[JobPosting]:
         limit = 3
         LOGGER.info(
             msg=f"Searching with Meilisearch with a limit of {limit}"
         )
+        location_filter = ''
+        if search.location in state_name_to_state_code.keys():
+            location_filter = f'region = "{state_name_to_state_code[search.location]}"'
+        else:
+            location_filter = f'locality = "{search.location}"'
+        
         return [self.JobPosting(*res.values()) for res in client.index('jobs').search(query=search.title, opt_params={
             'limit': limit,
-            'filter': f'employment_type = "{search.employment_type}"'
+            'filter': f'employment_type = "{search.employment_type}" AND {location_filter}'
         })['hits']]
 
-    def output_job_postings(self, postings: List[JobPosting], dispatcher: CollectingDispatcher) -> None:
+    def output_job_postings(self, postings: List[JobPosting], dispatcher: CollectingDispatcher, search: JobSearch) -> None:
         if not postings:
             LOGGER.info(
                 msg="No jobs were found"
             )
-            dispatcher.utter_message(text="Sorry, we couldn't find any jobs matching that criteria... :(")
+            dispatcher.utter_message(text=f'Sorry, we couldn\'t find any jobs matching the following criteria: "Working {search.employment_type} as a {search.title} in {search.location}"')
             return
         
         posting_carousel = []
@@ -129,7 +156,7 @@ class ActionSearchJobs(Action):
                 "company" : posting.company,
             })
             
-        dispatcher.utter_message(attachment= posting_carousel)
+        dispatcher.utter_message(attachment=posting_carousel)
 
     def run(
         self,
@@ -139,7 +166,7 @@ class ActionSearchJobs(Action):
     ) -> List[Dict[str, Any]]:
         search = self.build_job_search_query(tracker=tracker)
         postings = self.search_jobs(search=search)
-        self.output_job_postings(postings=postings, dispatcher=dispatcher)
+        self.output_job_postings(postings=postings, dispatcher=dispatcher, search=search)
         return []
 
 
