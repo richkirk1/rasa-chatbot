@@ -1,6 +1,6 @@
 import { createChatBotMessage } from "react-chatbot-kit";
 import Options from "../widgets/Options";
-import Carousel from "../widgets/Carousel";
+import Carousel from "../widgets/Carousel/Carousel";
 import InfoBox from "../widgets/InfoBox";
 
 const config = {
