@@ -13,6 +13,7 @@
     "react-multi-carousel": "^2.8.2",
     "react-scripts": "5.0.1",
     "react-simple-chatbot": "^0.6.1",
+    "react-util-kit": "^0.0.15",
     "socket.io-client": "^4.6.0",
     "styled-components": "^4.4.1",
     "web-vitals": "^2.1.4"

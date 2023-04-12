@@ -1,6 +1,9 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './Carousel.css';
+import InfoBox from "./InfoBox.js";
+
+import { ConditionallyRender } from "react-util-kit";
 
 const responsive = {
     desktop: {
@@ -16,12 +19,14 @@ const responsive = {
       items: 1,
     }
 };
+// onClick={() => props.ActionProvider.setState((state) => ({ ...state, infoBox: "active" }))}
 
-const Postings = (props) => {
-  const attachment = props.payload.attachment;
+const Postings = ({payload, infoBox, setState}) => {
+
+  const attachment = payload.attachment;
 
   const carouselMarkup = attachment.map((attachment, index) => (
-    <div className='job title' key={index}>
+    <div className='job title' onClick={() => setState((state) => ({ ...state, infoBox: index}))}key={index}>
       <h1>{attachment.title}</h1>
         <ul className='nobull'>
           <li className='title'>Company</li>
@@ -32,6 +37,7 @@ const Postings = (props) => {
   ))
      
   return (
+    <div>
     <Carousel
         swipeable={true}
         draggable={true}
@@ -49,6 +55,13 @@ const Postings = (props) => {
     >
         {carouselMarkup}
     </Carousel>
+    <ConditionallyRender
+     ifTrue={infoBox !="inactive"}
+     show={
+      <InfoBox setState={setState} payload={payload} index={infoBox}></InfoBox> 
+     }
+    />
+    </div>
   );
 }
 

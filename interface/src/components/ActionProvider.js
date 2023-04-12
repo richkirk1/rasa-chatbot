@@ -45,6 +45,7 @@ class ActionProvider {
     this.setState((prevState) => ({
         ...prevState,
         messages: [...prevState.messages, message],
+        infoBox: "inactive",
     }));
    };
 
@@ -77,8 +78,6 @@ class ActionProvider {
 
     this.setMessage(message);
   }
-
-
 
   addUserMessage = (message) => {
     const response = this.createClientMessage(message);
