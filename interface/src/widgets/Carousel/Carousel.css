@@ -1,0 +1,57 @@
+div.carousel-container {
+    border: solid 1px red;
+}
+
+div.job.title{
+    background-color: #efefef;
+    width: 75%;
+    border-radius: 12px;
+    height: 90%;
+    margin: auto;
+    border: solid 2px #efefef;
+    overflow: hidden;
+    transition-duration: 0.4s;
+}
+
+div.job.title:hover{
+    cursor: pointer;
+    box-shadow: 5px 5px 2px 1px #514f4f;
+}
+
+h1{
+    font-size: 13px;
+    color: #514f4f;;
+    border-bottom: 5px white;
+    border-width: 70%;
+    background-color: #efefef;
+}
+
+
+p.company {
+    font-size:11px;
+    margin-top: 0px;
+}
+
+
+button.left-arrow {
+    background-color: black;
+    position: relative;
+    margin:auto;
+}
+
+
+
+li.title{
+    font-size: 13px;
+    border: solid #8dcdec 3px;
+    background-color: #8dcdec;
+    color: white;
+    font-weight: bold;
+}
+
+li.info{
+    color: #514f4f;
+    border: solid #efefef 1px;
+    background-color: #efefef;
+}
+
