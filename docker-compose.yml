@@ -1,0 +1,32 @@
+version: '3.0'
+services:
+  rasa_sdk:
+    image: rasa/rasa-sdk:latest
+    container_name: rasasdk-container
+    expose:
+      - "5055:5055"
+    volumes:
+      - ./actions:/app/actions # Maybe ./actions should be absolute
+  apache:
+    image: httpd:latest
+    container_name: apache-container
+    ports:
+    - '80:80'
+    - '443:443'
+    volumes:
+    - ./interface:/usr/local/apache2/htdocs
+  rasa-chatbot:
+    image: rasa/rasa:3.5.4-full
+    container_name: chatbot-container
+    expose:
+      - 5050:5050
+    volumes:
+      - ./:.
+    command:
+      - train --domain domain.yml --data data --out models
+      - run
+  meli:
+    image: getmeili/meilisearch:latest
+    container_name: melisearch-container
+    expose: 
+     - 7700:7700
