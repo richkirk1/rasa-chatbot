@@ -1,6 +1,4 @@
-div.carousel-container {
-    border: solid 1px red;
-}
+
 
 div.job.title{
     background-color: #efefef;
@@ -30,13 +28,4 @@ h1.title{
 p.company {
     font-size:11px;
     margin-top: 0px;
-}
-
-
-.carousel-arrow-group {
-    
-}
-
-button.right-arrow {
-    border: solid black;
 }
