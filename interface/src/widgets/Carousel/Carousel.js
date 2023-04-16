@@ -2,7 +2,9 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './Carousel.css';
 
-import {useState} from 'react';
+import InfoBox from "../InfoBox.js";
+
+import { ConditionallyRender } from "react-util-kit";
 
 const responsive = {
     desktop: {
@@ -21,49 +23,34 @@ const responsive = {
 
 
 
-const Postings = (props) => {
-  const [isShown, setIsShown] = useState(true);
+const Postings = ({payload, setState, infoBox}) => {
 
-  const handleClick = event => {
-    setIsShown(current => !current);
-    console.log("event triggered!");
-  }
-  const attachment = props.payload.attachment;
+  const attachment = payload.attachment;
 
   const carouselMarkup = attachment.map((attachment, index) => (
-    <div onClick={handleClick} className='job title' key={index}>
-      <h1>{attachment.title}</h1>
+    <div onClick={() => setState((state) => ({ ...state, infoBox: index}))} className='job title' key={index}>
+      <h1 className='title'>{attachment.title.split('-')[0]}</h1>
           <p className='company'>{attachment.company}</p>
       </div>
     
   ))
 
-  const CustomRightArrow = ({ onClick, ...rest }) => {
-    const {
-      onMove,
-      carouselState: { currentSlide, deviceType }
-    } = rest;
-    // onMove means if dragging or swiping in progress.
-    return <button className="right-arrow"onClick={() => onClick()} />;
-  };
-
-  const CustomLeftArrow = ({ onClick, ...rest }) => {
-    const {
-      onMove,
-      carouselState: { currentSlide, deviceType }
-    } = rest;
-    // onMove means if dragging or swiping in progress.
-    return <button className="left-arrow" onClick={() => onClick()} />;
-  };
-
-
+  const ButtonGroup = ({ next, previous, ...rest }) => {
+    const { carouselState: { currentSlide } } = rest;
+    return (
+      <div className="carousel-arrow-group"> 
+        <button className='left-arrow' onClick={() => previous()}>&laquo;</button>
+        <button className='right-arrow' onClick={() => next()}>&raquo;</button>
+      </div>
+    );
+  };;
      
   return (
     <div className='arrow-container'>
     <Carousel
-        customRightArrow={<CustomRightArrow />}
-        customLeftArrow={<CustomLeftArrow />}
-  
+        arrows={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<ButtonGroup/>}
         swipeable={true}
         draggable={true}
         showDots={false}
@@ -80,6 +67,12 @@ const Postings = (props) => {
     >
         {carouselMarkup}
     </Carousel>
+    <ConditionallyRender
+     ifTrue={infoBox !=="inactive"}
+     show={
+      <InfoBox setState={setState} payload={payload} index={infoBox}></InfoBox> 
+     }
+    />
     </div>
 
   );

@@ -18,7 +18,7 @@ div.job.title:hover{
     box-shadow: 5px 5px 2px 1px #514f4f;
 }
 
-h1{
+h1.title{
     font-size: 13px;
     color: #514f4f;;
     border-bottom: 5px white;
@@ -33,25 +33,10 @@ p.company {
 }
 
 
-button.left-arrow {
-    background-color: black;
-    position: relative;
-    margin:auto;
+.carousel-arrow-group {
+    
 }
 
-
-
-li.title{
-    font-size: 13px;
-    border: solid #8dcdec 3px;
-    background-color: #8dcdec;
-    color: white;
-    font-weight: bold;
+button.right-arrow {
+    border: solid black;
 }
-
-li.info{
-    color: #514f4f;
-    border: solid #efefef 1px;
-    background-color: #efefef;
-}
-

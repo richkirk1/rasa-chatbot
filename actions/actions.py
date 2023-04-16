@@ -154,6 +154,7 @@ class ActionSearchJobs(Action):
             posting_carousel.append({
                 "title" : posting.title,
                 "company" : posting.company,
+                "description" : posting.description,
             })
             
         dispatcher.utter_message(attachment=posting_carousel)
