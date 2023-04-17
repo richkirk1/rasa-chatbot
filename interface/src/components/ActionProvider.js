@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import socket from '../socketio';
-var socketio;
 
 class ActionProvider {
     constructor(
@@ -24,17 +21,17 @@ class ActionProvider {
    */
 
    messageHandler = (message) => {
-    if(!socketio)                 // looking to change this set up but running with this for right now. 
-      socketio = socket("http://localhost:5005/");
-    
-    socketio.removeAllListeners() // ensures there is only one bot listening
+
+    const socket = this.stateRef.socket;
+
+    socket.removeAllListeners() // ensures there is only one bot listening
   
-    socketio.emit('user_uttered', {
+    socket.emit('user_uttered', {
       'message': message,
-      'session_id': socketio.id
+      'session_id': socket.id
     });
 
-    socketio.on('bot_uttered', (response) => {
+    socket.on('bot_uttered', (response) => {
       console.log(response);
       (response.attachment ? this.addCustomMessage(response) : this.addBotMessage(response));
     });
@@ -45,6 +42,7 @@ class ActionProvider {
     this.setState((prevState) => ({
         ...prevState,
         messages: [...prevState.messages, message],
+        infoBox: "inactive",
     }));
    };
 
@@ -77,8 +75,6 @@ class ActionProvider {
 
     this.setMessage(message);
   }
-
-
 
   addUserMessage = (message) => {
     const response = this.createClientMessage(message);
