@@ -4,7 +4,7 @@ services:
     image: rasa/rasa-sdk:latest
     container_name: rasasdk-container
     expose:
-      - "5055:5055"
+      - "5055"
     volumes:
       - ./actions:/app/actions # Maybe ./actions should be absolute
   apache:
@@ -19,9 +19,9 @@ services:
     image: rasa/rasa:3.5.4-full
     container_name: chatbot-container
     expose:
-      - 5050:5050
+      - '5050'
     volumes:
-      - ./:.
+      - ./:/app
     command:
       - train --domain domain.yml --data data --out models
       - run
@@ -29,4 +29,4 @@ services:
     image: getmeili/meilisearch:latest
     container_name: melisearch-container
     expose: 
-     - 7700:7700
+     - '7700'
