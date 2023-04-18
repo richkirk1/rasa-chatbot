@@ -115,7 +115,12 @@ rules:
       - slot_was_set:
           - requested_slot: null
       - action: action_search_jobs
-
+  
+  - rule: Parse Resume
+    steps:
+      - intent: upload_resume
+      - action: utter_received
+      
   - rule: out-of-scope
     steps:
     - intent: out_of_scope
