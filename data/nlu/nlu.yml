@@ -167,6 +167,16 @@ nlu:
       - What are my options
       - What are some job examples
       - What do you need to know for this field?
+  - intent: upload_resume
+    examples: | 
+      - https://resumerovers.s3.us-east-2.amazonaws.com/something.pdf
+      - https://resumerovers.s3.us-east-2.amazonaws.com/resume.pdf
+      - https://resumerovers.s3.us-east-2.amazonaws.com/something.docx
+      - https://resumerovers.s3.us-east-2.amazonaws.com/AdamSandlerResume.pdf
+      - https://resumerovers.s3.us-east-2.amazonaws.com/AdamSandlerResume.docx
+      - https://resumerovers.s3.us-east-2.amazonaws.com/JohnDoeResume.pdf
+      - https://resumerovers.s3.us-east-2.amazonaws.com/myresume.pdf
+      - https://resumerovers.s3.us-east-2.amazonaws.com/4_17_2023.pdf
 
   - intent: out_of_scope
     examples: |
@@ -282,6 +292,12 @@ nlu:
       - eval("puts 'hello world'")
       - ../../../../../../../../../../../etc/passwd%00
       - Powerلُلُصّبُلُلصّبُررً ॣ ॣh ॣ ॣ冗
+      - https://google.com
+      - https://potato.com
+      - https://www.youtube.com/watch?v=LduZQAaJq4c 
+      - https://puginarug.com/
+      - https://sliding.toys/mystic-square/8-puzzle/
+
 
   - intent: search_jobs
     examples: |

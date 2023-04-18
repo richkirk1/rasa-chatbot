@@ -104,6 +104,8 @@ responses:
     - text: Woof woof! Hey there, I'm Rover, a happy-go-lucky pup with a wagging tail and a heart full of love.
   utter_explain:
     - text: I need to know the job title so I can help you find a job.
+  utter_received:
+    - text: Upload recieved!
   utter_examples:
     - text: Some examples are web developer, software engineer, IT, software development, etc.
 
