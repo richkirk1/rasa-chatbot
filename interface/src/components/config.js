@@ -9,15 +9,17 @@ import UploadBox from "../UploadBox";
 
 const socket = io("http://localhost:5005/");
 const config = {
-  initialMessages: [createChatBotMessage(`Hello friend, my name is Rover. I am here to help you on your job search today!`),
+  initialMessages: [
+    createChatBotMessage(`Hello friend, my name is Rover. I am here to help you on your job search today!`,
+      {
+        widget: "upload",
+      }),
   createChatBotMessage("1. Ask questions?", 
       {
         delay: 500,
-      }
-      ),
+      }),
   createChatBotMessage("2. Upload your resume",
       {
-        widget: "upload",
         delay: 500,
       }
   )
@@ -44,7 +46,6 @@ const config = {
     {
       widgetName: "upload",
       widgetFunc: (props) => <UploadBox {...props} />,
-      mapStateToProps: [socket],
     }
   ]
 }
