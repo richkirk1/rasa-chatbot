@@ -1,0 +1,29 @@
+.docs-section {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  
+  .docs-inner-container {
+    display: flex;
+  }
+  
+  .docs-container {
+    width: 100%;
+    padding: 50px;
+    background-color: #fff;
+    flex-direction: row;
+  }
+  
+  
+  
+  @media (max-width: 1000px) {
+    .docs-section {
+      flex-direction: column;
+    }
+  
+    .docs-container {
+      width: auto;
+      padding: 20px;
+    }
+  }

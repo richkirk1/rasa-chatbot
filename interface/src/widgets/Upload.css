@@ -3,8 +3,8 @@
 input[type="file"] {
     background-color: #75C5ED;
     border-radius: 30px;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     position: absolute;
     cursor: pointer;
     z-index: 1;
@@ -14,18 +14,22 @@ input[type="file"] {
 .upload-button{
     background-color: #75C5ED;
     border-radius: 30px;
-    width: 30px;
-    height: 30px;
+    border: #75C5ED;
+    width: 35px;
+    height: 35px;
     position: absolute;
     transition-duration: 0.4s;
     cursor: pointer;
     z-index: 1;
 }
+.upload-button:hover{
+    background-color: #7ED4FF;
+}
 
 .upload-wrap{
     position: absolute;
-    bottom: 7%;
-    right: 27%;
+    bottom: 7.5%;
+    right: 28.5%;
     max-width:  100%;
     z-index: 1;
 }
