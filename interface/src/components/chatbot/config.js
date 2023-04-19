@@ -1,11 +1,9 @@
 import { createChatBotMessage } from "react-chatbot-kit";
-import io from '../socketio';
-import Options from "../widgets/Options";
-import Carousel from "../widgets/Carousel/Carousel";
-import InfoBox from "../widgets/InfoBox";
-
-
-import UploadBox from "../UploadBox";
+import io from '../socket/socketio';
+import Options from "../../widgets/Options";
+import Carousel from "../../widgets/Carousel/Carousel";
+import InfoBox from "../../widgets/InfoBox";
+import Upload from "../../widgets/Upload";
 
 const socket = io("http://localhost:5005/");
 const config = {
@@ -18,7 +16,7 @@ const config = {
       {
         delay: 500,
       }),
-  createChatBotMessage("2. Upload your resume",
+  createChatBotMessage("2. Upload your resume.",
       {
         delay: 500,
       }
@@ -45,7 +43,7 @@ const config = {
     },
     {
       widgetName: "upload",
-      widgetFunc: (props) => <UploadBox {...props} />,
+      widgetFunc: (props) => <Upload {...props} />,
     }
   ]
 }

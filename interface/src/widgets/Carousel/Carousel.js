@@ -28,15 +28,14 @@ const Postings = ({payload, setState, infoBox}) => {
   const attachment = payload.attachment;
 
   const carouselMarkup = attachment.map((attachment, index) => (
-    <div onClick={() => setState((state) => ({ ...state, infoBox: index}))} className='job title' key={index}>
-      <h1 className='title'>{attachment.title.split('-')[0]}</h1>
-          <p className='company'>{attachment.company}</p>
+    <div onClick={() => setState((state) => ({ ...state, infoBox: index}))} className='job-title-carousel' key={index}>
+      <h1 className='title-carousel'>{attachment.title.split('-')[0]}</h1>
+      <p className='company-carousel'>{attachment.company}</p>
       </div>
     
   ))
 
   const ButtonGroup = ({ next, previous, ...rest }) => {
-    const { carouselState: { currentSlide } } = rest;
     return (
       <div className="carousel-arrow-group"> 
         <button className='left-arrow' onClick={() => previous()}>&laquo;</button>

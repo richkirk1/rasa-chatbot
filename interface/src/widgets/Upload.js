@@ -1,7 +1,10 @@
 import "./Upload.css"
+import {UploadIcon} from "./UploadIcon.js";
 
-import React ,{useState} from 'react';
+import React  from 'react';
 import AWS from 'aws-sdk'
+
+
 
 const S3_BUCKET ='resumerovers';
 const REGION ='us-east-2';
@@ -20,11 +23,7 @@ const myBucket = new AWS.S3({
 
 const UploadFileToS3 = (props) => {
 
-    const [progress , setProgress] = useState(0);
-    const [selectedFile, setSelectedFile] = useState(null);
-
     const handleFileInput = (e) => {
-        setSelectedFile(e.target.files[0]);
         uploadFile(e.target.files[0]);
     }
 
@@ -39,7 +38,6 @@ const UploadFileToS3 = (props) => {
 
         myBucket.putObject(params)
             .on('httpUploadProgress', (evt) => {
-                setProgress(Math.round((evt.loaded / evt.total) * 100))
                 if(evt.loaded/evt.total >= 1)
                     props.actionProvider.messageHandler("https://resumerovers.s3.us-east-2.amazonaws.com/" + file.name);
                 
@@ -53,7 +51,7 @@ const UploadFileToS3 = (props) => {
     return (
 
         <div className="upload-wrap">
-            <button type="button" className="upload-button"></button>
+            <button type="button" className="upload-button"><UploadIcon/></button>
             <input type="file" onChange={handleFileInput} className="upload-btn"/>
         </div>
     )

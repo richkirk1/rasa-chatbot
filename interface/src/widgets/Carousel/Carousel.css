@@ -1,6 +1,6 @@
 
 
-div.job.title{
+div.job-title-carousel{
     background-color: #efefef;
     width: 75%;
     border-radius: 12px;
@@ -9,23 +9,29 @@ div.job.title{
     border: solid 2px #efefef;
     overflow: hidden;
     transition-duration: 0.4s;
+
 }
 
-div.job.title:hover{
+div.job-title-carousel:hover{
     cursor: pointer;
-    box-shadow: 5px 5px 2px 1px #514f4f;
+    box-shadow: 2px 2px 2px 1px #979696;
 }
 
-h1.title{
-    font-size: 13px;
+h1.title-carousel{
+    font-size: 17px;
     color: #514f4f;;
     border-bottom: 5px white;
     border-width: 70%;
     background-color: #efefef;
+    margin-bottom: 0;
+
 }
 
+div.carousel-arrow-group {
+    margin-top: 5px;
+}
 
-p.company {
-    font-size:11px;
+p.company-carousel {
+    font-size:12px;
     margin-top: 0px;
 }
