@@ -16,7 +16,7 @@ from rasa_sdk.types import DomainDict
 
 LOGGER: Final[Logger] = getLogger(__name__)
 
-client = Client('http://localhost:7700')
+client = Client('http://meili-server:7700')
 jobs = load(open('./actions/jobs.json'))
 client.index('jobs').add_documents(jobs)
 client.index('jobs').update_filterable_attributes([
