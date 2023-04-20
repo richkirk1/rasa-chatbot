@@ -2,9 +2,8 @@ FROM rasa/rasa:latest
 WORKDIR '/app'
 COPY . /app
 USER root
-# WORKDIR /app
-# COPY . /app
 COPY ./data /app/data
+RUN pip install --verbose -r requirements.txt
 RUN  rasa train
 VOLUME /app
 VOLUME /app/data
