@@ -5,7 +5,7 @@ import Carousel from "../../widgets/Carousel/Carousel";
 import InfoBox from "../../widgets/InfoBox";
 import Upload from "../../widgets/Upload";
 
-const socket = io("http://34.173.255.122:5005/");
+const socket = io("http://"+ window.location.hostname + ":5005/");
 const config = {
   initialMessages: [
     createChatBotMessage(`Hello friend, my name is Rover. I am here to help you on your job search today!`,
