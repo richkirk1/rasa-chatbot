@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0bd0bf58.css",
+    "main.js": "/static/js/main.311a2d7a.js",
+    "static/media/vulpix.png": "/static/media/vulpix.cce8917a69bd389af1d3.png",
+    "static/media/cubone.png": "/static/media/cubone.5a27387b20161ca3ad79.png",
+    "static/media/eve.png": "/static/media/eve.ab17b728c360c91d2a16.png",
+    "static/media/pikachu.png": "/static/media/pikachu.d20bdd5d52ce4df7f2b0.png",
+    "static/media/rover.png": "/static/media/rover.699b57dfc2fb0b657d78.png",
+    "static/media/mimikyu.png": "/static/media/mimikyu.5482f41dfe6dd84313f7.png",
+    "static/media/kirby.png": "/static/media/kirby.d57cb5a3fa67e87b34d8.png",
+    "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
+    "index.html": "/index.html",
+    "main.0bd0bf58.css.map": "/static/css/main.0bd0bf58.css.map",
+    "main.311a2d7a.js.map": "/static/js/main.311a2d7a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0bd0bf58.css",
+    "static/js/main.311a2d7a.js"
+  ]
+}

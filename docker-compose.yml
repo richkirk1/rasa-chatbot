@@ -1,0 +1,36 @@
+version: '3.3'
+
+networks:
+  deployment-network:
+    driver: bridge
+services:
+  meili-server:
+    image: getmeili/meilisearch:v1.1
+    container_name: meili-server
+    ports:
+      - "7700:7700"
+    volumes:
+      - ./meili_data:/meili_data
+    networks:
+      - deployment-network
+  action-server:
+    build: .
+    image: actions:latest
+    container_name: action-server
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./actions:/app/actions
+    networks:
+      - deployment-network
+  interface:
+    build:
+      context: ./interface
+    image: interface:latest
+    container_name: apache-container
+    ports:
+      - "80:80"
+    volumes:
+      - ./interface/src:/usr/local/apache2/htdocs/
+    networks:
+      - deployment-network
