@@ -19,6 +19,10 @@ export default function (socketUrl, customData, path) {
     const options = path ? { path } : {};
     const socket  = io(socketUrl, options);
 
+    if(socket.connected){
+        return socket;
+    }
+
     //confirm connection
     socket.on('connect', () => {
         console.log(`Connected: ${getSessionID(socket)}`);
