@@ -40,9 +40,7 @@ https://docs.meilisearch.com/learn/getting_started/quick_start.html
 #### Node.js
 
 ```{bash}
-npm i --prefix ./interface react-simple-chatbot
-npm i --prefix ./interface socket.io-client
-npm i --prefix ./interface styled-components
+npm install 
 ```
 
 ## Usage (How to Run this chatbot)
