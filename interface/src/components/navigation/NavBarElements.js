@@ -14,9 +14,7 @@ export const Nav = styled.nav`
   gap: 10px;
   z-index: 12;
   background-color: white;
-
   box-shadow: 5px 1px 5px 1px #514f4f;
-
 `;
   
 export const NavLink = styled(Link)`
@@ -46,8 +44,5 @@ export const NavMenu = styled.div`
   align-items: center;
   margin-right: 10px;
 
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
 `;
 

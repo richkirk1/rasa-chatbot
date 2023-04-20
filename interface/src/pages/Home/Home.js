@@ -10,7 +10,7 @@ import MessageParser from '../../components/chatbot/MessageParser';
 import ActionProvider from '../../components/chatbot/ActionProvider';
 import config from '../../components/chatbot/config';
 
-import {Header, Image, Content, Main, Container, Info, Rover} from './HomeElements';
+import {Header, Image, Content, Main, Container, Info, Rover,ChatButton} from './HomeElements';
 import 'react-chatbot-kit/build/main.css';
 import './Interface.css';
 import './Chatbot.css';
@@ -32,7 +32,7 @@ const Home = () => {
             <Main>
                 <Header>Get started now</Header>
                 <Container>
-                    <Info> You can start your job search by uploading your resume or by telling Rover you're looking for a job.8</Info>
+                    <Info> You can start your job search by uploading your resume or by telling Rover you're looking for a job.</Info>
                 </Container>
             </Main>
             <div className='chatbot-container'>
@@ -48,10 +48,9 @@ const Home = () => {
                     }
                 />
             </div>
-            <button
-            className="chatbot-button"
+            <ChatButton
             onClick={() => toggleChatbot((prev) => !prev)}
-            ><Rover src={rover}></Rover></button>
+            ><Rover src={rover}></Rover></ChatButton>
         </Background>
         <Docs/>
         </div>

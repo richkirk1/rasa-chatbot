@@ -52,6 +52,18 @@ export const Rover = styled.img`
   cursor: pointer;
 `
 
+export const ChatButton = styled.button`
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: none;
+  position: fixed;
+  z-index: 9999;
+  right: 40px;
+  bottom: 21.5px;
+  cursor: pointer;
+`
+
 export const Content = styled.p`
   color: #fff;
   font-weight:bold;
