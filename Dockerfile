@@ -1,19 +1,12 @@
-# Extend the official Rasa SDK image
-FROM rasa/rasa-sdk:latest
-
-# Change back to root user to install dependencies
+FROM rasa/rasa:latest
+WORKDIR '/app'
+COPY . /app
 USER root
-
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# To install packages from PyPI
-RUN pip install --no-cache-dir black && \
-    pip install --no-cache-dir nltk && \
-    pip install --no-cache-dir spacy && \
-    pip install --no-cache-dir isort && \
-    pip install --no-cache-dir meilisearch && \
-    pip install --no-cache-dir sqlalchemy
-
-# Switch back to non-root to run code
-USER 1001
+# WORKDIR /app
+# COPY . /app
+COPY ./data /app/data
+RUN  rasa train
+VOLUME /app
+VOLUME /app/data
+VOLUME /app/models
+CMD ["run","-m","/app/models","--enable-api","--cors","*","--debug" ,"--endpoints", "endpoints.yml", "--log-file", "out.log", "--debug"]
