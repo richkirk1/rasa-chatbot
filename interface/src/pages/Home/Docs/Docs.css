@@ -1,18 +1,17 @@
 .docs-section {
     display: flex;
-    min-height: 100vh;
+    min-height: 50vh;
+    justify-content: center;
   }
   
-  
-  .docs-inner-container {
-    display: flex;
-  }
   
   .docs-container {
     width: 100%;
     padding: 50px;
+    display: flex;
     background-color: #fff;
     flex-direction: row;
+    justify-content: center;
   }
   
   
@@ -20,10 +19,12 @@
   @media (max-width: 1000px) {
     .docs-section {
       flex-direction: column;
+    
     }
   
     .docs-container {
       width: auto;
       padding: 20px;
+      flex-direction: column;
     }
   }

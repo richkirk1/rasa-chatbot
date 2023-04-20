@@ -37,6 +37,7 @@ p.description-content{
 }
 
 p.company {
+  margin-top: 0;
   font-size: 15px;
 }
 
