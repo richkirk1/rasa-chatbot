@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 networks:
   deployment-network:
@@ -14,12 +14,14 @@ services:
     networks:
       - deployment-network
   action-server:
-    build: .                                                                                                            image: actions:latest
+    build: .
+    image: actions:latest
     container_name: action-server
     ports:
       - "5055:5055"
     volumes:
-      - ./actions:/app/actions                                                                                          networks:
+      - ./actions:/app/actions
+    networks:
       - deployment-network
   interface:
     build:
