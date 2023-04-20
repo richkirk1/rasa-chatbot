@@ -132,6 +132,63 @@ Then, in the postman UI, you can run tests on the Collections (<https://learning
 
 `config.yml` - training configurations for the NLU pipeline and policy ensemble
 
+## Deployment
+
+GCP STEPS
+
+ 1. Create a new project
+    - https://console.cloud.google.com/cloud-resource-manager
+ 2. Create a brand spanken new vm
+    - https://console.cloud.google.com/compute/instances
+ 3. Reserve static ip for vm
+    - https://console.cloud.google.com/networking/addresses
+ 4. Set UNSAFE firewall rule (can fix later)
+    - https://console.cloud.google.com/networking/firewalls
+ 5. Create new rule w/ properties:
+      - Target: all instances
+      - Direction: ingress
+      - Source IP ranges: 0.0.0.0/0
+      - Ports and protocols: allow all
+
+VM STEPS
+
+ 1. Update and upgrade
+    - sudo apt update
+    - sudo apt upgrade
+ 2. Install git
+    - sudo apt install git
+ 3. Clone the relevant repository
+    - git clone [URL]
+ 4. Install docker
+    - sudo apt install docker
+ 5. Train model & build rasa-server WARNING: High Server Impact
+    - sudo docker build -t rasa:latest .
+ 6. Build action-server
+    - sudo docker build -t actions:latest ./actions
+ 7. Build the react interface and apache-server
+    - sudo docker build -t interface:latest ./interface
+ 8. Create Docker Network
+    - sudo docker network create deployment-network
+ 9. Run meli-server
+    - sudo docker run -it -d --rm --network deployment-network -p 7700:7700 --name meili-server -v $(pwd)/meili_data:/meili_data getmeili/meilisearch:v1.1
+ 10. Run actions server
+    - sudo docker run -d --rm -v "$PWD"/actions:/app/actions --network deployment-network -p 5055:5055 --name action-server actions:latest
+ 11. Run Rasa server
+    - sudo docker run -it -d --rm --network deployment-network -p 5005:5005 --name rasa-server rasa:latest
+ 12. Run apache server
+    - sudo docker run -d --rm --name apache-container -p 80:80 interface:latest
+
+Helpful Docker commands:
+
+ - List containers
+    - sudo docker container ls -a
+ - Destroy all containers
+    - sudo docker rm -f $(sudo docker ps -a -q)
+ - Check used docker space
+    - sudo du -sh /var/lib/docker
+ - Destroy EVERYTHING
+    - sudo docker system prune -a -f --volumes
+
 ## Development
 
 To develop code for this bot:
@@ -160,5 +217,7 @@ To develop code for this bot:
     ```{bash}
     git push -u origin <branch-name>
     ```
+
+
 
 - Submit a PR following this guide (<https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request?tool=webui>)
